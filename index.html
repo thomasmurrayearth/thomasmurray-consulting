@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thomas Murray Consulting - Strategic Operations for Climate & Environmental Businesses</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #e8f5e8;
+            background: linear-gradient(135deg, #1a2e1a 0%, #0d1a0d 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(73, 124, 73, 0.3);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4a7c4a;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #4a7c4a 0%, #6b9b6b 100%);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(74, 124, 74, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 124, 74, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 0 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, #1a2e1a 0%, #0f1f0f 100%);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #e8f5e8;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero .subtitle {
+            font-size: 1.3rem;
+            color: #4a7c4a;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .hero .description {
+            font-size: 1.1rem;
+            color: #b8d4b8;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            line-height: 1.7;
+        }
+
+        /* About Section */
+        .about {
+            padding: 5rem 0;
+            background: rgba(26, 46, 26, 0.7);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            color: #e8f5e8;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .about-text p {
+            color: #b8d4b8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .experience-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .experience-item {
+            background: rgba(74, 124, 74, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(74, 124, 74, 0.2);
+        }
+
+        .experience-item h4 {
+            color: #4a7c4a;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .experience-item p {
+            color: #b8d4b8;
+            font-size: 0.95rem;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #1a2e1a 0%, #0d1a0d 100%);
+        }
+
+        .services h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #e8f5e8;
+            margin-bottom: 3rem;
+            font-weight: 700;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: rgba(74, 124, 74, 0.1);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(74, 124, 74, 0.2);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .service-card h3 {
+            color: #4a7c4a;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .service-card p {
+            color: #b8d4b8;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .service-card ul {
+            list-style: none;
+            color: #b8d4b8;
+        }
+
+        .service-card li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .service-card li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4a7c4a;
+            font-weight: bold;
+        }
+
+        /* Results Section */
+        .results {
+            padding: 5rem 0;
+            background: rgba(26, 46, 26, 0.7);
+        }
+
+        .results h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #e8f5e8;
+            margin-bottom: 3rem;
+            font-weight: 700;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, #4a7c4a 0%, #6b9b6b 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .result-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-description {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #1a2e1a 0%, #0f1f0f 100%);
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 2.5rem;
+            color: #e8f5e8;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .contact p {
+            font-size: 1.2rem;
+            color: #b8d4b8;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .contact-button {
+            background: linear-gradient(135deg, #4a7c4a 0%, #6b9b6b 100%);
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(74, 124, 74, 0.3);
+        }
+
+        .contact-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 124, 74, 0.4);
+        }
+
+        .contact-button.secondary {
+            background: transparent;
+            color: #4a7c4a;
+            border: 2px solid #4a7c4a;
+        }
+
+        .contact-button.secondary:hover {
+            background: #4a7c4a;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: #0d1a0d;
+            color: #b8d4b8;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: #b8d4b8;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #4a7c4a;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .experience-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">Thomas Murray Consulting</div>
+            <a href="#contact" class="cta-button">Get Started</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Scale Faster. Scale Better.</h1>
+            <p class="subtitle">Strategic Operations for Climate & Environmental Businesses</p>
+            <p class="description">
+                I help climate-focused startups and environmental businesses navigate growth challenges through intelligent strategy, operational excellence, and systems design. Available for consultancy services and both short and long-term contracts.
+            </p>
+            <a href="#contact" class="cta-button">Transform Your Business</a>
+        </div>
+    </section>
+
+    <section class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Thomas Murray</h2>
+                    <p>
+                        I'm a strategic problem solver with over a decade of experience helping organizations tackle complex growth and operational challenges. I translate ambitious visions into executable strategies and build systems that scale.
+                    </p>
+                    <p>
+                        Most recently, I led New Zealand's national Climate Change Adaptation Programme and designed transformation systems for environmental policy delivery. I work exclusively with climate and environmental businesses because the opportunity to accelerate the transition has never been greater.
+                    </p>
+                </div>
+                <div class="experience-grid">
+                    <div class="experience-item">
+                        <h4>Programme Leadership</h4>
+                        <p>Led national programmes coordinating up to 40 professionals across complex environmental landscapes.</p>
+                    </div>
+                    <div class="experience-item">
+                        <h4>Partnership Development</h4>
+                        <p>Established strategic partnerships worth over $1M, including climate-tech accelerators.</p>
+                    </div>
+                    <div class="experience-item">
+                        <h4>Change Management</h4>
+                        <p>Achieved 90%+ engagement while reducing negative outcomes by 92% through strategic change.</p>
+                    </div>
+                    <div class="experience-item">
+                        <h4>Systems Design</h4>
+                        <p>Built Enterprise Portfolio Management systems and operational frameworks for growth.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="services">
+        <div class="container">
+            <h2>How I Help Climate Businesses Thrive</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Growth Strategy & Operations</h3>
+                    <p>Design operational frameworks that support rapid expansion while maintaining mission alignment.</p>
+                    <ul>
+                        <li>Operational systems design</li>
+                        <li>Growth readiness assessments</li>
+                        <li>Resource planning and organizational design</li>
+                        <li>Performance frameworks</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <h3>Strategic Project Delivery</h3>
+                    <p>Navigate complex initiatives with confidence, ensuring critical projects deliver real-world impact.</p>
+                    <ul>
+                        <li>Multi-stakeholder project leadership</li>
+                        <li>Risk management and dependency mapping</li>
+                        <li>Agile frameworks for climate businesses</li>
+                        <li>Cross-functional coordination</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <h3>Investment Preparation</h3>
+                    <p>Build the operational foundations and strategic narratives that investors demand.</p>
+                    <ul>
+                        <li>Investment readiness assessments</li>
+                        <li>Financial planning and reporting systems</li>
+                        <li>Due diligence preparation</li>
+                        <li>Growth scenario modeling</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="results">
+        <div class="container">
+            <h2>Proven Results</h2>
+            <div class="results-grid">
+                <div class="result-card">
+                    <span class="result-number">$1M+</span>
+                    <div class="result-description">Partnership value delivered through strategic collaboration</div>
+                </div>
+                <div class="result-card">
+                    <span class="result-number">92%</span>
+                    <div class="result-description">Reduction in negative outcomes through change management</div>
+                </div>
+                <div class="result-card">
+                    <span class="result-number">40+</span>
+                    <div class="result-description">Professionals coordinated across environmental programmes</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact">
+        <div class="container">
+            <h2>Ready to Scale Your Impact?</h2>
+            <p>
+                Available for consultancy services and both short and long-term contracts. Let's build the systems and strategies that drive sustainable success for your climate business.
+            </p>
+            <div class="contact-buttons">
+                <a href="mailto:thomasmurraynz@gmail.com" class="contact-button">Start a Conversation</a>
+                <a href="https://www.linkedin.com/in/1thomasmurray" class="contact-button secondary" target="_blank">View LinkedIn Profile</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 Thomas Murray Consulting. Accelerating climate business success.</p>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/1thomasmurray" target="_blank">LinkedIn</a>
+                    <a href="mailto:thomasmurraynz@gmail.com">Email</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
