@@ -42,12 +42,54 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 0;
+            position: relative;
         }
 
         .logo {
             font-size: 1.5rem;
             font-weight: 700;
             color: #4a7c4a;
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            min-width: 200px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            border: 1px solid rgba(74, 124, 74, 0.3);
+            z-index: 1001;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown-content a {
+            color: #e8f5e8;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            margin: 4px;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(74, 124, 74, 0.2);
+            color: #4a7c4a;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
         }
 
         .cta-button {
@@ -383,7 +425,13 @@
     <header>
         <nav class="container">
             <div class="logo">Thomas Murray Consulting</div>
-            <a href="#contact" class="cta-button">Get Started</a>
+            <div class="dropdown">
+                <a href="#" class="cta-button">Get Started</a>
+                <div class="dropdown-content">
+                    <a href="mailto:thomas@thomasmurray.earth">📧 Email me</a>
+                    <a href="https://www.linkedin.com/in/1thomasmurray" target="_blank">🔗 Check out my LinkedIn</a>
+                </div>
+            </div>
         </nav>
     </header>
 
@@ -394,7 +442,7 @@
             <p class="description">
                 I help climate-focused startups and environmental businesses navigate growth challenges through intelligent strategy, operational excellence, and systems design. Available for consultancy services and both short and long-term contracts.
             </p>
-            <a href="#contact" class="cta-button">Transform Your Business</a>
+
         </div>
     </section>
 
