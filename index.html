@@ -110,65 +110,87 @@
 
         /* Hero Section */
         .hero {
-            padding: 8rem 0 4rem;
+            padding: 12rem 0 8rem;
             text-align: center;
             background: linear-gradient(135deg, #1a2e1a 0%, #0f1f0f 100%);
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
+            font-size: 4rem;
+            font-weight: 300;
             color: #e8f5e8;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
+            margin-bottom: 2rem;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
         }
 
         .hero .subtitle {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             color: #4a7c4a;
-            margin-bottom: 2rem;
-            font-weight: 500;
+            margin-bottom: 3rem;
+            font-weight: 400;
         }
 
         .hero .description {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: #b8d4b8;
-            max-width: 700px;
-            margin: 0 auto 3rem;
-            line-height: 1.7;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+            font-weight: 300;
         }
 
         /* About Section */
         .about {
-            padding: 5rem 0;
+            padding: 8rem 0;
             background: rgba(26, 46, 26, 0.7);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
         }
 
         .about-content {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
+            grid-template-columns: 1fr;
+            gap: 6rem;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
         }
 
         .about-text h2 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             color: #e8f5e8;
-            margin-bottom: 1.5rem;
-            font-weight: 700;
+            margin-bottom: 3rem;
+            font-weight: 300;
+            letter-spacing: -0.01em;
         }
 
         .about-text p {
             color: #b8d4b8;
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            font-size: 1.2rem;
             line-height: 1.7;
+            font-weight: 300;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .experience-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
+            gap: 3rem;
+            margin-top: 4rem;
         }
 
         .experience-item {
@@ -192,49 +214,58 @@
 
         /* Services Section */
         .services {
-            padding: 5rem 0;
+            padding: 8rem 0;
             background: linear-gradient(135deg, #1a2e1a 0%, #0d1a0d 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
         }
 
         .services h2 {
             text-align: center;
-            font-size: 2.5rem;
+            font-size: 3rem;
             color: #e8f5e8;
-            margin-bottom: 3rem;
-            font-weight: 700;
+            margin-bottom: 6rem;
+            font-weight: 300;
+            letter-spacing: -0.01em;
         }
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .service-card {
-            background: rgba(74, 124, 74, 0.1);
-            padding: 2.5rem;
-            border-radius: 16px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(74, 124, 74, 0.2);
+            background: rgba(74, 124, 74, 0.05);
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: none;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(74, 124, 74, 0.1);
+            text-align: center;
         }
 
         .service-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            background: rgba(74, 124, 74, 0.08);
         }
 
         .service-card h3 {
             color: #4a7c4a;
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
+            font-size: 1.6rem;
+            margin-bottom: 2rem;
+            font-weight: 400;
         }
 
         .service-card p {
             color: #b8d4b8;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             line-height: 1.6;
+            font-size: 1.1rem;
+            font-weight: 300;
         }
 
         .service-card ul {
@@ -258,65 +289,79 @@
 
         /* Results Section */
         .results {
-            padding: 5rem 0;
+            padding: 8rem 0;
             background: rgba(26, 46, 26, 0.7);
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
         }
 
         .results h2 {
             text-align: center;
-            font-size: 2.5rem;
+            font-size: 3rem;
             color: #e8f5e8;
-            margin-bottom: 3rem;
-            font-weight: 700;
+            margin-bottom: 6rem;
+            font-weight: 300;
+            letter-spacing: -0.01em;
         }
 
         .results-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4rem;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .result-card {
             background: linear-gradient(135deg, #4a7c4a 0%, #6b9b6b 100%);
             color: white;
-            padding: 2rem;
-            border-radius: 16px;
+            padding: 3rem 2rem;
+            border-radius: 12px;
             text-align: center;
         }
 
         .result-number {
-            font-size: 2.5rem;
-            font-weight: 700;
+            font-size: 3rem;
+            font-weight: 300;
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
         }
 
         .result-description {
-            font-size: 1.1rem;
+            font-size: 1rem;
             opacity: 0.9;
+            font-weight: 300;
+            line-height: 1.4;
         }
 
         /* Contact Section */
         .contact {
-            padding: 5rem 0;
+            padding: 8rem 0;
             background: linear-gradient(135deg, #1a2e1a 0%, #0f1f0f 100%);
             text-align: center;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
         }
 
         .contact h2 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             color: #e8f5e8;
-            margin-bottom: 1.5rem;
-            font-weight: 700;
+            margin-bottom: 3rem;
+            font-weight: 300;
+            letter-spacing: -0.01em;
         }
 
         .contact p {
             font-size: 1.2rem;
             color: #b8d4b8;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+            font-weight: 300;
+            line-height: 1.6;
         }
 
         .contact-buttons {
@@ -393,20 +438,38 @@
             }
 
             .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .hero .description {
                 font-size: 1.1rem;
             }
 
             .about-content {
                 grid-template-columns: 1fr;
-                gap: 2rem;
+                gap: 3rem;
+            }
+
+            .about-text h2 {
+                font-size: 2rem;
             }
 
             .experience-grid {
                 grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .services h2, .results h2, .contact h2 {
+                font-size: 2rem;
             }
 
             .services-grid {
+                gap: 3rem;
+            }
+
+            .results-grid {
                 grid-template-columns: 1fr;
+                gap: 2rem;
             }
 
             .contact-buttons {
@@ -417,6 +480,16 @@
             .footer-content {
                 flex-direction: column;
                 text-align: center;
+            }
+
+            .hero {
+                padding: 8rem 0 6rem;
+                min-height: 80vh;
+            }
+
+            .about, .services, .results, .contact {
+                padding: 6rem 0;
+                min-height: auto;
             }
         }
     </style>
@@ -440,7 +513,7 @@
             <h1>Grow Better.</h1>
             <p class="subtitle">Strategic Operations for Climate & Environmental Businesses</p>
             <p class="description">
-                I help climate-focused startups and environmental businesses navigate growth challenges through intelligent strategy, operational excellence, and systems design. Available for consultancy services and both short and long-term contracts.
+                I help climate-focused startups and environmental businesses navigate growth challenges through intelligent strategy, operational excellence, and systems design.
             </p>
 
         </div>
@@ -456,6 +529,9 @@
                     </p>
                     <p>
                         Most recently, I led New Zealand's national Climate Change Adaptation Programme and designed transformation systems for environmental policy delivery. I work exclusively with climate and environmental businesses because the opportunity to accelerate the transition has never been greater.
+                    </p>
+                    <p>
+                        Available for consultancy services and both short and long-term contracts.
                     </p>
                 </div>
                 <div class="experience-grid">
@@ -489,9 +565,9 @@
                     <p>Design operational frameworks that support rapid expansion while maintaining mission alignment.</p>
                     <ul>
                         <li>Operational systems design</li>
-                        <li>Growth readiness assessments</li>
                         <li>Resource planning and organizational design</li>
                         <li>Performance frameworks</li>
+                        <li>Strategic planning and goal-setting</li>
                     </ul>
                 </div>
 
@@ -507,13 +583,13 @@
                 </div>
 
                 <div class="service-card">
-                    <h3>Investment Preparation</h3>
-                    <p>Build the operational foundations and strategic narratives that investors demand.</p>
+                    <h3>Partnership & Programme Development</h3>
+                    <p>Build strategic partnerships and establish programmes that deliver measurable impact.</p>
                     <ul>
-                        <li>Investment readiness assessments</li>
+                        <li>Strategic partnership development</li>
+                        <li>Multi-stakeholder programme design</li>
                         <li>Financial planning and reporting systems</li>
-                        <li>Due diligence preparation</li>
-                        <li>Growth scenario modeling</li>
+                        <li>Cross-sector collaboration frameworks</li>
                     </ul>
                 </div>
             </div>
@@ -544,7 +620,7 @@
         <div class="container">
             <h2>Ready to Scale Your Impact?</h2>
             <p>
-                Available for consultancy services and both short and long-term contracts. Let's build the systems and strategies that drive sustainable success for your climate business.
+                Ready to grow your impact? Let's build the systems and strategies that drive sustainable success for your climate business.
             </p>
             <div class="contact-buttons">
                 <a href="mailto:thomasmurraynz@gmail.com" class="contact-button">Start a Conversation</a>
