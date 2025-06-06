@@ -160,11 +160,33 @@
 
         .about-content {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr 1fr;
             gap: 6rem;
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
+            align-items: center;
+        }
+
+        .about-photo {
             text-align: center;
+        }
+
+        .about-photo img {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(74, 124, 74, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .about-photo img:hover {
+            transform: scale(1.05);
+        }
+
+        .about-text {
+            text-align: left;
         }
 
         .about-text h2 {
@@ -181,9 +203,6 @@
             font-size: 1.2rem;
             line-height: 1.7;
             font-weight: 300;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
         .experience-grid {
@@ -447,7 +466,17 @@
 
             .about-content {
                 grid-template-columns: 1fr;
-                gap: 3rem;
+                gap: 4rem;
+                text-align: center;
+            }
+
+            .about-text {
+                text-align: center;
+            }
+
+            .about-photo img {
+                width: 250px;
+                height: 250px;
             }
 
             .about-text h2 {
@@ -522,6 +551,9 @@
     <section class="about">
         <div class="container">
             <div class="about-content">
+                <div class="about-photo">
+                    <img src="thomas-murray.jpg" alt="Thomas Murray - Strategic Operations Consultant">
+                </div>
                 <div class="about-text">
                     <h2>Thomas Murray</h2>
                     <p>
@@ -534,23 +566,23 @@
                         Available for consultancy services and both short and long-term contracts.
                     </p>
                 </div>
-                <div class="experience-grid">
-                    <div class="experience-item">
-                        <h4>Programme Leadership</h4>
-                        <p>Led national programmes coordinating up to 40 professionals across complex environmental landscapes.</p>
-                    </div>
-                    <div class="experience-item">
-                        <h4>Partnership Development</h4>
-                        <p>Established strategic partnerships worth over $1M, including climate-tech accelerators.</p>
-                    </div>
-                    <div class="experience-item">
-                        <h4>Change Management</h4>
-                        <p>Achieved 90%+ engagement while reducing negative outcomes by 92% through strategic change.</p>
-                    </div>
-                    <div class="experience-item">
-                        <h4>Systems Design</h4>
-                        <p>Built Enterprise Portfolio Management systems and operational frameworks for growth.</p>
-                    </div>
+            </div>
+            <div class="experience-grid">
+                <div class="experience-item">
+                    <h4>Programme Leadership</h4>
+                    <p>Led national programmes coordinating up to 40 professionals across complex environmental landscapes.</p>
+                </div>
+                <div class="experience-item">
+                    <h4>Partnership Development</h4>
+                    <p>Established strategic partnerships worth over $1M, including climate-tech accelerators.</p>
+                </div>
+                <div class="experience-item">
+                    <h4>Change Management</h4>
+                    <p>Achieved 90%+ engagement while reducing negative outcomes by 92% through strategic change.</p>
+                </div>
+                <div class="experience-item">
+                    <h4>Systems Design</h4>
+                    <p>Built Enterprise Portfolio Management systems and operational frameworks for growth.</p>
                 </div>
             </div>
         </div>
