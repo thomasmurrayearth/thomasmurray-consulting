@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Value Chain for System Change</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:         #f7f5f0;
+  --bg-2:       #eeecea;
+  --bg-3:       #e4e2de;
+  --surface:    #eeecea;
+  --surface2:   #e4e2de;
+  --border:     rgba(0,0,0,0.09);
+  --border-mid: rgba(0,0,0,0.15);
+  --text:       #1a1916;
+  --text-dim:   #7a7870;
+  --text-mid:   #4a4845;
+  --accent:     #3d8c68;
+  --accent-dim: rgba(61,140,104,0.35);
+  --accent-2:   #8a6f3a;
+  --accent-2-dim: rgba(138,111,58,0.35);
+  --line:       rgba(0,0,0,0.09);
+  --fade:       rgba(0,0,0,0.12);
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow: hidden;
+}
+
+/* ── Header ── */
+#header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
+  padding: 22px 36px 48px;
+  background: linear-gradient(to bottom, rgba(247,245,240,0.98) 55%, rgba(247,245,240,0));
+  pointer-events: none;
+}
+
+#header-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+
+#header-title em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+#header-desc {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--text-dim);
+  max-width: 420px;
+  line-height: 1.65;
+  letter-spacing: 0.01em;
+}
+
+/* ── Legend ── */
+#legend {
+  position: fixed;
+  bottom: 28px; left: 32px;
+  z-index: 50;
+  pointer-events: none;
+}
+
+#legend-hint {
+  font-size: 10px;
+  font-weight: 300;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.legend-items {
+  display: flex;
+  gap: 22px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 11px;
+  color: var(--text-dim);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+.legend-line {
+  width: 28px;
+  height: 2px;
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+.ll-primary { background: var(--accent); }
+.ll-sig     { background: var(--accent-2); opacity: 0.8; }
+.ll-some    { background: var(--text-dim); opacity: 0.45; border: none; }
+
+/* ── SVG Wrap ── */
+#svg-wrap {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#svg-wrap.panel-open {
+  transform: translateX(-205px);
+}
+
+#network {
+  width: min(92vw, 92vh);
+  height: min(92vw, 92vh);
+}
+
+/* ── SVG node styles ── */
+.node-hit {
+  fill: transparent;
+  cursor: pointer;
+}
+.node-rect {
+  fill: var(--bg-2);
+  stroke: var(--border-mid);
+  stroke-width: 1;
+  transition: fill 0.18s, stroke 0.18s, stroke-width 0.18s;
+}
+.node-group:hover .node-rect {
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  fill: var(--bg-3);
+}
+.node-rect.selected {
+  stroke: var(--accent);
+  stroke-width: 2;
+  fill: rgba(61,140,104,0.07);
+}
+.node-rect.related {
+  stroke: rgba(0,0,0,0.2);
+  stroke-width: 1.5;
+}
+.node-rect.dimmed {
+  fill: rgba(247,245,240,0.5);
+  stroke: rgba(0,0,0,0.04);
+}
+
+.node-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10.5px;
+  font-weight: 400;
+  fill: var(--text);
+  text-anchor: middle;
+  pointer-events: none;
+  letter-spacing: 0.01em;
+  transition: fill 0.18s;
+}
+.node-label.dimmed { fill: rgba(26,25,22,0.2); }
+.node-label.selected { fill: var(--accent); }
+
+/* ── SVG edge styles ── */
+.edge {
+  fill: none;
+  pointer-events: none;
+  transition: opacity 0.22s, stroke-width 0.22s;
+}
+.edge.primary {
+  stroke: var(--accent);
+  stroke-width: 1.8;
+  opacity: 0.85;
+}
+.edge.sig {
+  stroke: var(--accent-2);
+  stroke-width: 1.2;
+  stroke-dasharray: 6 4;
+  opacity: 0.45;
+}
+.edge.some {
+  stroke: var(--text-dim);
+  stroke-width: 1;
+  stroke-dasharray: 2 7;
+  opacity: 0.2;
+}
+
+.edge.highlighted.primary  { opacity: 1; stroke-width: 2.4; }
+.edge.highlighted.sig      { opacity: 0.85; stroke-width: 1.8; }
+.edge.highlighted.some     { opacity: 0.5; stroke-width: 1.4; }
+.edge.dimmed               { opacity: 0.05 !important; }
+
+/* ── Detail Panel ── */
+#panel {
+  position: fixed;
+  top: 0; right: 0;
+  height: 100vh;
+  width: 410px;
+  background: var(--bg);
+  border-left: 1px solid var(--line);
+  transform: translateX(100%);
+  transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#panel.open { transform: translateX(0); }
+
+#panel-header {
+  padding: 22px 24px 18px;
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+}
+
+#panel-close {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 10px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.15s;
+}
+#panel-close:hover { color: var(--text); }
+#panel-close::before { content: '←'; font-size: 12px; }
+
+#panel-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--text);
+  margin-bottom: 14px;
+  letter-spacing: -0.01em;
+}
+
+#panel-question {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 15px;
+  font-style: italic;
+  color: var(--accent);
+  line-height: 1.6;
+  padding-left: 14px;
+  border-left: 2px solid var(--accent-dim);
+}
+
+/* Connection chips */
+#panel-connections {
+  padding: 14px 24px 12px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.c-chip {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  padding: 3px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+.c-chip:hover { opacity: 0.75; }
+.c-chip.cp { background: rgba(61,140,104,0.1); color: #2a7050; border: 1px solid rgba(61,140,104,0.25); }
+.c-chip.cs { background: rgba(138,111,58,0.1); color: #6a5020; border: 1px solid rgba(138,111,58,0.25); }
+.c-chip.cf { background: rgba(0,0,0,0.05); color: var(--text-mid); border: 1px solid rgba(0,0,0,0.1); }
+.c-chip.ci { background: rgba(61,140,104,0.05); color: #5a9878; border: 1px solid rgba(61,140,104,0.15); }
+
+.chip-arrow {
+  font-size: 9px;
+  opacity: 0.55;
+  margin-right: 3px;
+}
+
+/* Tabs */
+#panel-tabs {
+  display: flex;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+  gap: 2px;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-family: 'Inter', sans-serif;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 11px 10px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.tab-btn:hover { color: var(--text-mid); }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* Content */
+#panel-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 22px 24px 36px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-mid) transparent;
+}
+#panel-content::-webkit-scrollbar { width: 3px; }
+#panel-content::-webkit-scrollbar-thumb { background: var(--bg-3); }
+
+.p-text {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1.75;
+}
+
+.p-list {
+  list-style: none;
+  padding: 0;
+}
+.p-list li {
+  font-size: 12.5px;
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1.6;
+  padding: 7px 0 7px 18px;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+.p-list li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--text-dim);
+  font-size: 10px;
+  top: 10px;
+}
+
+.failure-card {
+  background: rgba(180, 80, 40, 0.04);
+  border: 1px solid rgba(180, 80, 40, 0.14);
+  border-radius: 3px;
+  padding: 13px 16px;
+  margin-bottom: 10px;
+}
+.failure-if {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: #9a4828;
+  margin-bottom: 5px;
+  line-height: 1.45;
+}
+.failure-if span { font-weight: 400; color: #c08060; font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 6px; }
+.failure-then {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--text);
+  opacity: 0.85;
+  line-height: 1.55;
+}
+.failure-then span { font-weight: 400; color: var(--text-dim); font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 6px; }
+.failure-ref {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--text-dim);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  opacity: 0.7;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  transition: opacity 0.15s, color 0.15s;
+}
+.failure-ref:hover { opacity: 1; color: var(--accent); border-bottom-color: var(--accent-dim); }
+.failure-ref::before { content: '↗ '; font-size: 9px; }
+</style>
+</head>
+<body>
+
+<div id="header">
+  <div id="header-title">A Value Chain for <em>System Change</em></div>
+  <div id="header-desc">A diagnostic and design tool for any organisation trying to create change in a complex system. Use it to find out where you are, what to do next, the skills you need, and the pitfalls to watch out for.</div>
+</div>
+
+<div id="svg-wrap">
+  <svg id="network" viewBox="0 0 900 900" xmlns="http://www.w3.org/2000/svg"></svg>
+</div>
+
+<div id="legend">
+  <div id="legend-hint">Connections</div>
+  <div class="legend-items">
+    <div class="legend-item"><div class="legend-line ll-primary"></div>Primary flow</div>
+    <div class="legend-item"><div class="legend-line ll-sig"></div>Significant flow</div>
+    <div class="legend-item"><div class="legend-line ll-some"></div>Feedback</div>
+  </div>
+</div>
+
+<div id="panel">
+  <div id="panel-header">
+    <button id="panel-close">Close</button>
+    <div id="panel-name"></div>
+    <div id="panel-question"></div>
+  </div>
+  <div id="panel-connections"></div>
+  <div id="panel-tabs">
+    <button class="tab-btn active" data-tab="purpose">Purpose</button>
+    <button class="tab-btn" data-tab="capabilities">Skills</button>
+    <button class="tab-btn" data-tab="outputs">Outputs</button>
+    <button class="tab-btn" data-tab="pitfalls">Pitfalls</button>
+    <button class="tab-btn" data-tab="uk">UK Framework</button>
+  </div>
+  <div id="panel-content"></div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+//  STAGE DATA
+// ─────────────────────────────────────────────
+const STAGES = [
+  {
+    id: 0,
+    name: "System intelligence",
+    nodeLines: ["System", "intelligence"],
+    question: "What is the system we are operating in, how is it changing, and what does that mean for different values?",
+    purpose: "Understand the system the agency operates in before framing problems. Identify how the system is changing, where it is heading, and whether the agency's current mission framing remains adequate. Observe cumulative systemic change being produced by multiple actors across the system. Pre-problem-definition work — ontological and exploratory, not yet prescriptive.",
+    capabilities: [
+      "Systems dynamics modelling (constructing causal loop maps, stock-and-flow diagrams, and feedback analysis)",
+      "Strategic intelligence analysis (competitive and environmental scanning; weak signal detection and synthesis)",
+      "Strategic foresight and scenario planning",
+      "Evidence synthesis and knowledge management",
+      "Data mining and open-source intelligence (OSINT)"
+    ],
+    outputs: [
+      "System map (actors, causal relationships, feedback dynamics, and key stocks and flows)",
+      "Intelligence brief (weak signals, trends, emerging risks, and systemic shifts)",
+      "Mission adequacy assessment (whether the current framing remains fit for the system as observed)"
+    ],
+    pitfalls: [
+      { if_: "we rush to problem definition without observing how the system actually behaves", then: "we mistake a surface symptom for a structural cause and design interventions that cannot work", url: "https://donellameadows.org/archives/dancing-with-systems" },
+      { if_: "we accept existing institutional framing of the system as given rather than as a constructed and contestable paradigm", then: "we embed the problem's own logic into the solution design", url: "https://provocations.darkmatterlabs.org" },
+      { if_: "we apply expert analysis when the system has shifted from complicated to complex", then: "we generate confident but incorrect diagnoses and act at the wrong leverage point", url: "https://cynefin.io" },
+      { if_: "we treat intelligence as a one-off exercise rather than a continuous function", then: "we confuse immediate crisis triggers with deeper systemic patterns and miss the gradual shifts that matter most", url: "https://nesta.org.uk/report/the-open-book-of-social-innovation" }
+    ],
+    uk: [
+      "HM Treasury Green Book Appendix A (strategic context)",
+      "Government Office for Science horizon scanning",
+      "Cabinet Office Outcome Delivery Plans (strategic context)",
+      "GovS 002 (Analysis) — Aqua Book standards for analytical quality",
+      "UKRI/GO-Science Futures Toolkit",
+      "Civil Service Systems Thinking Practitioner guidance",
+      "Better Regulation Framework (evidence base)"
+    ],
+    primaryTo: [1], sigTo: [], someTo: [2, 9]
+  },
+  {
+    id: 1,
+    name: "Framing challenges",
+    nodeLines: ["Framing", "challenges"],
+    question: "What are the challenges and opportunities presented to our value system by the system functioning as it is, and which do we want to focus on?",
+    purpose: "Translate system intelligence into challenge and opportunity frames. Select which of these the agency will treat as priority, informed by both system intelligence and the values being served (e.g. current government priorities). This work converts system understanding into challenges to address.",
+    capabilities: [
+      "Problem structuring (issue decomposition; root cause analysis; MECE analysis)",
+      "Ethnographic and qualitative research (surfacing structural, relational, and institutional conditions)",
+      "Strategic prioritisation and trade-off analysis",
+      "Political economy and stakeholder analysis (mapping power, interests, and incentives)",
+      "Data visualisation and communication (presenting structural analysis to decision-makers)"
+    ],
+    outputs: [
+      "Challenge brief (prioritised problem or opportunity and its underlying structural roots)",
+      "Dark matter map (the institutional, relational, and structural conditions shaping the challenge)",
+      "Focus rationale (what was selected and explicitly deprioritised, and why)"
+    ],
+    pitfalls: [
+      { if_: "we define the problem in terms of its most visible symptom rather than its underlying structural causes", then: "we design interventions that treat effects rather than causes and the problem recurs", url: "https://provocations.darkmatterlabs.org" },
+      { if_: "we frame at the level of parameters rather than at the level of goals or system structure", then: "even a well-executed intervention produces little lasting change", url: "https://donellameadows.org/archives/dancing-with-systems" },
+      { if_: "we narrow the frame prematurely around a single sector or instrument", then: "we foreclose more systemic approaches before they are even considered", url: "https://marianamazzucato.com/books/mission-economy" },
+      { if_: "we treat a genuinely complex challenge as a complicated problem with a knowable fixed solution", then: "we produce an intervention that cannot adapt to emergent conditions and fails as the system responds", url: "https://cynefin.io" },
+      { if_: "we select frames based on political tractability rather than causal importance", then: "we anchor strategy on visible crises rather than the underlying drivers producing them", url: "https://nesta.org.uk/report/the-open-book-of-social-innovation" }
+    ],
+    uk: [
+      "Better Regulation Framework 2023 (problem definition stage)",
+      "HM Treasury Green Book ROAMEF cycle (Rationale)",
+      "Cabinet Office Policy Profession Standards",
+      "Public Value Framework",
+      "Equality Act 2010 (public sector equality duty in framing)",
+      "GovS 001 (Government Functions — scoping mandate)"
+    ],
+    primaryTo: [2], sigTo: [3], someTo: [0]
+  },
+  {
+    id: 2,
+    name: "Strategy",
+    nodeLines: ["Strategy"],
+    question: "Given how the system is functioning and the values we are serving, what frames, challenges, and opportunities are we focusing on, and how much effort are we assigning to each?",
+    purpose: "Translate strategic intelligence and ministerial priorities into a coherent set of funded priority areas and performance expectations. Allocate finite resources across priority frames. Commit to a direction while maintaining flexibility to adapt as the system evolves. Agree on the basis for resource allocation with sponsors and ministers.",
+    capabilities: [
+      "Investment portfolio management (capital allocation across competing opportunities; risk-return analysis)",
+      "OKR and performance framework design",
+      "Investment case development (financial and strategic appraisal of priority investment areas)",
+      "Enterprise risk management and strategic risk mapping",
+      "Programme management (establishing and governing multi-year strategic programmes)",
+      "Portfolio analytics and financial data modelling"
+    ],
+    outputs: [
+      "Mission portfolio (priority investment areas with resource allocations and time horizons)",
+      "Outcomes framework (system-level outcome indicators and review cycle)",
+      "Strategic priorities (2-4 statements about priority challenges and opportunities)",
+      "Programme mandate (authority and resource envelope per priority area)",
+      "Strategic risk map"
+    ],
+    pitfalls: [
+      { if_: "we treat strategy as budget allocation rather than as commitment of public risk capital to transformative challenges", then: "we systematically under-invest in high-impact areas and concentrate resources where returns are lowest", url: "https://marianamazzucato.com/books/mission-economy" },
+      { if_: "we adjust parameters — budgets, headcount — without changing the goals or rules of the system", then: "we optimise within the wrong paradigm and generate activity without progress", url: "https://donellameadows.org/archives/dancing-with-systems" },
+      { if_: "we list many priorities without making real trade-offs", then: "strategy becomes a communication document and scarce resources are spread too thin to have impact at any of them", url: "https://nesta.org.uk/report/the-open-book-of-social-innovation" },
+      { if_: "we adjust inputs to existing programmes without questioning whether those programmes address the right problems", then: "we entrench failing approaches through single-loop strategy", url: "https://infed.org/mobi/chris-argyris-theories-of-action-double-loop-learning-and-organizational-learning" },
+      { if_: "we anchor resource decisions on prior-year budgets rather than zero-based prioritisation against mission", then: "optimism bias distorts investment away from genuine strategic priorities", url: "https://gov.uk/government/publications/orange-book" }
+    ],
+    uk: [
+      "HM Treasury Green Book (strategic case)",
+      "Five Case Model (strategic case)",
+      "Outcome Delivery Plans (Cabinet Office)",
+      "GovS 001 (Government Functions)",
+      "Managing Public Money",
+      "Orange Book (strategic risk management)",
+      "ALB framework document and sponsorship arrangements",
+      "Spending Review process",
+      "Cabinet Office Functional Standards"
+    ],
+    primaryTo: [3], sigTo: [5], someTo: [1, 0]
+  },
+  {
+    id: 3,
+    name: "Situational analysis",
+    nodeLines: ["Situational", "analysis"],
+    question: "At a granular level, how is the system working, what are the mechanisms producing the outcomes, and what is the nature of those outcomes?",
+    purpose: "Conduct detailed, scoped analysis of a specific part of the wider system that has been prioritised through Framing and Strategy. Quantify patterns, identify causal mechanisms, understand affected populations, and produce a diagnosis sufficient to design targeted interventions. This is where root causes are identified, not just symptoms.",
+    capabilities: [
+      "Causal inference and econometric analysis (identifying mechanism structure and causation, not just correlation)",
+      "Business analysis (process analysis; gap analysis; business process mapping)",
+      "Market analysis (market sizing; competitive dynamics; demand characterisation)",
+      "Product and user behaviour analytics",
+      "Quantitative data analysis and statistical modelling",
+      "Population segmentation and profiling",
+      "Systematic evidence review and meta-analysis",
+      "Research design (experimental, quasi-experimental, and observational study design)"
+    ],
+    outputs: [
+      "Mechanism map (the causal structure producing current outcomes)",
+      "Population and harm profile (who is affected, at what scale, and through what pathways)",
+      "Evidence synthesis",
+      "Evidence gap register",
+      "Project brief"
+    ],
+    pitfalls: [
+      { if_: "we confuse correlation with causation or miss the feedback loops and time delays that separate cause from observed effect", then: "we diagnose the wrong mechanism and design interventions with no causal purchase", url: "https://donellameadows.org/archives/dancing-with-systems" },
+      { if_: "we rely on data generated by frontline activity rather than measuring underlying reality directly", then: "we produce a diagnosis shaped by what is easy to count rather than what actually causes the outcomes we care about", url: "https://russellsage.org/publications/street-level-bureaucracy-0" },
+      { if_: "we apply root-cause analysis tools to genuinely complex phenomena where causation is emergent", then: "we generate plausible but incorrect mechanism maps and intervene at the wrong point", url: "https://cynefin.io" },
+      { if_: "we treat the situation as a static condition rather than a dynamic system that co-evolves with any intervention", then: "our diagnosis is out of date before the intervention is even designed", url: "https://marianamazzucato.com/books/mission-economy" },
+      { if_: "we conduct situational analysis as a one-off exercise rather than as a continuously updated evidence base", then: "we design interventions for how the situation was, not how it is", url: "https://nesta.org.uk/report/the-open-book-of-social-innovation" }
+    ],
+    uk: [
+      "HM Treasury Aqua Book (analytical quality assurance)",
+      "Magenta Book (evaluation planning and theory of change)",
+      "Green Book (evidence base for appraisal)",
+      "GovS 002 (Analysis function)",
+      "Better Regulation Framework (evidence requirements for regulatory proposals)",
+      "Government Social Research standards",
+      "Government Statistical Service standards",
+      "Equality analysis requirements"
+    ],
+    primaryTo: [5], sigTo: [4], someTo: [0]
+  },
+  {
+    id: 4,
+    name: "Outcome-setting",
+    nodeLines: ["Outcome-setting"],
+    question: "What outcomes will we optimise our interventions for?",
+    purpose: "Define the specific outcomes — behavioural, intermediate, and long-term — that interventions will be designed to produce, grounded in the causal diagnosis from Situational Analysis. Establish what success looks like in terms that are measurable, time-bound, and causally connected. Set the basis for subsequent evaluation and performance management.",
+    capabilities: [
+      "Impact measurement framework design",
+      "Intervention logic modelling (constructing causal chains from action to intended outcome)",
+      "Evaluation design (experimental, quasi-experimental, and mixed-methods approaches)",
+      "Indicator development and baseline measurement",
+      "Programme management (managing the outcomes and evaluation design workstream)",
+      "Data architecture and measurement systems design"
+    ],
+    outputs: [
+      "Impact framework (target outcomes with indicators, baselines, and tolerances)",
+      "Logic map (causal chain from intervention to intended outcome)",
+      "Evaluation plan"
+    ],
+    pitfalls: [
+      { if_: "we define outcomes using static cost-benefit metrics", then: "we fail to capture dynamic spillovers and long-term public value and systematically undervalue what the intervention is trying to achieve", url: "https://marianamazzucato.com/books/mission-economy" },
+      { if_: "we set agency-controlled output targets rather than co-produced outcomes centred on those we serve", then: "we can declare success on process metrics while the real-world outcome remains unchanged", url: "https://humanlearning.systems" },
+      { if_: "we define outcomes at the wrong leverage level — measuring stocks rather than the feedback loops that maintain them", then: "we optimise for the symptom and leave the cause untouched", url: "https://donellameadows.org/archives/dancing-with-systems" },
+      { if_: "we set targets that are politically legible but causally disconnected from the problem", then: "we build a performance framework that rewards effort in the wrong direction", url: "https://nesta.org.uk/report/the-open-book-of-social-innovation" },
+      { if_: "we do not design for how frontline workers will interpret and apply outcome targets", then: "those targets are systematically displaced by workload manageability, producing outcomes that serve the organisation rather than those it exists to serve", url: "https://russellsage.org/publications/street-level-bureaucracy-0" }
+    ],
+    uk: [
+      "HM Treasury Magenta Book (theory of change; evaluation design)",
+      "Green Book (appraisal criteria and ROAMEF)",
+      "Outcome Delivery Plans",
+      "GovS 002 (Analysis)",
+      "HM Treasury Public Value Framework",
+      "Cabinet Office Evaluation Task Force standards",
+      "Equality Act 2010 impact requirements"
+    ],
+    primaryTo: [5], sigTo: [3], someTo: [9]
+  },
+  {
+    id: 5,
+    name: "High-level concept design",
+    nodeLines: ["High-level", "concept design"],
+    question: "What are the system-level concepts or models that we want to invest in further designing and experimenting with?",
+    purpose: "Identify and develop a portfolio of high-level approaches (concepts, models, intervention logics) that could plausibly achieve the desired outcomes. Maintain multiple competing hypotheses rather than converging on a single model prematurely. Commission further design and experimentation work on the most promising concepts in the portfolio.",
+    capabilities: [
+      "Human-centred design and design thinking (concept ideation; co-design facilitation)",
+      "Product management (user requirements definition; acceptance criteria; backlog prioritisation)",
+      "Innovation portfolio management (generating and evaluating competing hypotheses)",
+      "Feasibility assessment (technical, financial, and organisational viability analysis)",
+      "Creative commissioning and brief writing",
+      "Project management (scoping and managing concept design and feasibility projects)",
+      "Digital and technology landscape assessment",
+      "Data requirements definition"
+    ],
+    outputs: [
+      "Innovation portfolio (competing intervention concepts with outline logic maps)",
+      "Concept feasibility assessments",
+      "High-level user requirements (what the intervention must deliver for those it serves)",
+      "Behavioural outcome targets (what behaviour we want to see from who — the threshold for finishing a programme)",
+      "Design brief (challenge and commissioning specification for detailed design)"
+    ],
+    pitfalls: [
+      { if_: "we converge on a single approach before genuine portfolio exploration", then: "we foreclose better solutions and embed the first politically convenient option rather than the most effective one", url: "https://marianamazzucato.com/books/mission-economy" },
+      { if_: "we generate concepts without genuine creative diversity", then: "we gravitate toward familiar instruments and miss more systemic or enabling approaches that could achieve greater leverage", url: "https://nesta.org.uk/report/the-open-book-of-social-innovation" },
+      { if_: "we constrain concepts to what existing institutional powers allow rather than what would actually change the system", then: "we design for the institution rather than for the outcome", url: "https://provocations.darkmatterlabs.org" },
+      { if_: "we select between concepts using expert analysis rather than probing and experimentation", then: "we choose based on theory alone and the selected concept may fail in practice for reasons theory did not anticipate", url: "https://cynefin.io" },
+      { if_: "we design concepts without involving those who will be served by the intervention in co-design", then: "we produce technically sophisticated approaches that fail because they do not fit the lived reality of those they are meant to serve", url: "https://humanlearning.systems" }
+    ],
+    uk: [
+      "Better Regulation Framework 2023 (options development)",
+      "HM Treasury Green Book Five Case Model (economic case — options appraisal)",
+      "Policy Profession Standards (option generation)",
+      "IPA Gateway 0 (Strategic Assessment)",
+      "GDS Discovery phase (for digital options)"
+    ],
+    primaryTo: [6], sigTo: [4], someTo: [3]
+  },
+  {
+    id: 6,
+    name: "Detailed intervention design and prototyping",
+    nodeLines: ["Detailed intervention", "design & prototyping"],
+    question: "What do we want to do to bring about the desired outcomes in line with the preferred concepts, and are these endeavours proportionate, evidence-based, and workable in practice?",
+    purpose: "Develop by design and prototyping a set of interventions optimised to bring about desired societal outcomes. Design laws, contestable grants, public services, and digital and data outputs. Test whether intervention concepts work in practice before full deployment. Iterate based on prototype findings.",
+    capabilities: [
+      "Agile product design and iterative prototyping (build-measure-learn cycles)",
+      "User research and usability testing",
+      "Technical and service specification writing",
+      "Software development and digital systems design",
+      "Data architecture and systems design",
+      "UX/UI design",
+      "Financial modelling and investment appraisal",
+      "Project management",
+      "Programme management"
+    ],
+    outputs: [
+      "Intervention design specification (detailed blueprint for the selected approach)",
+      "Prototype learning report (what testing revealed and how the design was iterated)",
+      "Investment case (full appraisal of the selected approach)",
+      "Delivery programme brief (mandate and plan for building and extending)"
+    ],
+    pitfalls: [
+      { if_: "we design without adequate engagement with frontline delivery workers", then: "we produce technically correct designs that become unimplementable at the point of discretionary application", url: "https://russellsage.org/publications/street-level-bureaucracy-0" },
+      { if_: "we design the intervention as a transfer of risk to the private sector while retaining nominal public accountability", then: "we lose the ability to steer the system from within and become dependent on our contractors' incentives rather than our own mission", url: "https://marianamazzucato.com/books/mission-economy" },
+      { if_: "we under-invest in prototyping and treat the designed intervention as the answer rather than as a hypothesis", then: "we deploy at scale without the learning needed to make it work and embed failure into the full system", url: "https://nesta.org.uk/report/the-open-book-of-social-innovation" },
+      { if_: "we design for the most visible symptom rather than the identified leverage point", then: "even a well-designed and well-delivered intervention produces little structural change", url: "https://donellameadows.org/archives/dancing-with-systems" },
+      { if_: "we compromise the intervention concept to fit existing legal powers rather than building the institutional arrangements the concept requires", then: "we lose the transformative potential of the design before it is even deployed", url: "https://provocations.darkmatterlabs.org" }
+    ],
+    uk: [
+      "Better Regulation Framework 2023 (impact assessment; RPC review)",
+      "HM Treasury Green Book (full appraisal)",
+      "Five Case Model (full business case)",
+      "Office of Parliamentary Counsel (legislative drafting)",
+      "IPA Gateway Reviews 1–3",
+      "GDS Alpha/Beta phases (digital services)",
+      "Magenta Book (evaluation design embedded in intervention)",
+      "Equality Act impact assessment"
+    ],
+    primaryTo: [7], sigTo: [5], someTo: [3, 4]
+  },
+  {
+    id: 7,
+    name: "Building and extending interventions",
+    nodeLines: ["Building and extending", "interventions"],
+    question: "Are all of the targeted people showing the behaviour we want them to show?",
+    purpose: "Extend the intervention(s) across all relevant contexts and parties so they change their behaviour in the desired way. Whether building and extending new laws across a jurisdiction, building physical or digital infrastructure, or extending grant programmes to full coverage — the goal is full reach and maximum effect.",
+    capabilities: [
+      "Organisational design (operating model design; job architecture; role profiling)",
+      "Change management and implementation management",
+      "Lean process design (process mapping; standard work development; workflow optimisation)",
+      "Instructional design and capability development",
+      "Project management (multi-workstream delivery and closure)",
+      "Programme management (coordinating multiple implementation workstreams)",
+      "Software engineering and digital development",
+      "Systems and infrastructure engineering",
+      "Data engineering (building production data pipelines and operational databases)",
+      "Cybersecurity and information assurance",
+      "Legal and compliance design (drafting enforcement frameworks and regulatory guidance)"
+    ],
+    outputs: [
+      "Deployed intervention (at full reach across target jurisdiction, population, or infrastructure)",
+      "Operating model (team structures, roles, reporting lines, and ways of working)",
+      "Standard operating procedures and process guides",
+      "Training materials and capability development resources",
+      "Performance framework (indicators and review cycle for learning about and improving ongoing delivery)",
+      "Programme and/or project closure report",
+      "Post-implementation learning report"
+    ],
+    pitfalls: [
+      { if_: "we rely on frontline delivery actors to implement consistently without designing the conditions that make consistent practice possible", then: "we create systematic gaps in coverage that undermine the causal logic of the intervention", url: "https://russellsage.org/publications/street-level-bureaucracy-0" },
+      { if_: "we treat extension as purely logistical rather than as an adaptive learning process", then: "we fail to adjust guidance as real-world conditions reveal gaps in the design, and problems compound as we scale", url: "https://nesta.org.uk/report/the-open-book-of-social-innovation" },
+      { if_: "we scale before sufficient learning has occurred from prototyping", then: "we embed design flaws into the full system at a cost that makes them very difficult to undo", url: "https://marianamazzucato.com/books/mission-economy" },
+      { if_: "we fail to monitor how the system is adapting to the intervention during extension", then: "we do not notice when the system is responding in ways that undermine its intended effect until the damage is done", url: "https://donellameadows.org/archives/dancing-with-systems" },
+      { if_: "we implement through existing institutional infrastructure when the intervention requires new institutional relationships", then: "the new design is captured by old governance arrangements and loses its transformative potential", url: "https://provocations.darkmatterlabs.org" }
+    ],
+    uk: [
+      "IPA Gateway 4 (Readiness for Service) and Gateway 5 (Benefits Evaluation)",
+      "GDS Live service assessment",
+      "Cabinet Office Implementation Taskforce standards",
+      "GovS 008 (Delivery)",
+      "Better Regulation Framework (post-implementation monitoring)",
+      "GDS Service Standard (points 8–14 on building and running services)"
+    ],
+    primaryTo: [8], sigTo: [6], someTo: [5]
+  },
+  {
+    id: 8,
+    name: "Running the system",
+    nodeLines: ["Running", "the system"],
+    question: "Are we doing what we said we would do to the desired level?",
+    purpose: "Deliver the regulatory and service functions of the agency at the required quality and volume. Operational delivery: doing what was committed to in the business plan — compliance monitoring, enforcement, grant management, public service provision, contract management, asset management — at the agreed standard.",
+    capabilities: [
+      "Operations management (maintaining quality, throughput, and compliance in complex operational systems)",
+      "Business intelligence and data engineering (collecting, processing, and surfacing operational performance data)",
+      "Intelligence analysis (pattern recognition and anomaly detection from live operational data)",
+      "Performance management and management reporting",
+      "Digital systems operations and service management (maintaining live digital services and infrastructure)",
+      "Cybersecurity and information assurance",
+      "Data quality management and data governance"
+    ],
+    outputs: [
+      "Operational performance data (compliance, service delivery, harm levels, and financial performance)",
+      "Intelligence products (emerging patterns, anomalies, and risks from live operations)",
+      "Periodic operational reports (performance against the delivery programme brief)"
+    ],
+    pitfalls: [
+      { if_: "we allow delivery practice to be shaped by workload manageability rather than by risk or need", then: "we produce a performance picture that reflects operational capacity rather than actual harm in the system", url: "https://russellsage.org/publications/street-level-bureaucracy-0" },
+      { if_: "we operate with long time delays between detecting a problem and responding to it", then: "harmful behaviours persist and the system overshoots or oscillates rather than converging on the desired state", url: "https://donellameadows.org/archives/dancing-with-systems" },
+      { if_: "we apply fixed management tools to genuinely complex and variable operational environments", then: "we optimise for predictability at the cost of adaptability and create blind spots for conditions the tools were not designed for", url: "https://cynefin.io" },
+      { if_: "we measure process compliance and activity rather than whether operations are producing desired outcomes", then: "we can be fully compliant and entirely ineffective at the same time", url: "https://humanlearning.systems" },
+      { if_: "we treat operational delivery as the end state rather than as an intelligence-generating process", then: "we run the system without learning from it and the opportunity to improve is systematically lost", url: "https://nesta.org.uk/report/the-open-book-of-social-innovation" }
+    ],
+    uk: [
+      "GovS 008 (Delivery)",
+      "IPA Gateway 5 (Benefits Realisation)",
+      "NAO value for money standards",
+      "Managing Public Money (grant management)",
+      "GDS Service Standard (running live services)",
+      "Government Internal Audit Agency (GIAA) standards",
+      "Orange Book (operational risk)"
+    ],
+    primaryTo: [9], sigTo: [3], someTo: [7]
+  },
+  {
+    id: 9,
+    name: "Optimising our role",
+    nodeLines: ["Optimising", "our role"],
+    question: "How well are we doing what we said we'd do, and how can we do it better to get better outcomes?",
+    purpose: "Apply performance management, continuous improvement, and learning to optimise how the agency delivers its current role. Distinguish between improving execution of current interventions (single-loop: lean, six sigma, process improvement) and questioning whether current interventions remain the right response to the problem (double-loop: reframing and strategic redesign). Feed intelligence systematically back into earlier stages.",
+    capabilities: [
+      "Programme evaluation (impact attribution; counterfactual analysis; cost-effectiveness analysis)",
+      "Quantitative data analysis (analysing operational datasets to produce evaluation findings)",
+      "Continuous improvement facilitation (lean; six sigma; DMAIC methodology)",
+      "After-action review facilitation",
+      "Organisational learning facilitation (single and double-loop learning methods)",
+      "Strategic review (questioning whether current interventions remain appropriate given system evolution)"
+    ],
+    outputs: [
+      "Annual review (operational learning from ongoing delivery)",
+      "Improvement plan (single-loop: process and delivery improvements)",
+      "Redesign brief (double-loop: feeding challenge back to earlier stages)"
+    ],
+    pitfalls: [
+      { if_: "we remain in single-loop learning — improving processes without questioning whether those processes produce the right outcomes", then: "we become increasingly efficient at doing the wrong thing", url: "https://infed.org/mobi/chris-argyris-theories-of-action-double-loop-learning-and-organizational-learning" },
+      { if_: "we evaluate against static cost-benefit criteria that cannot capture long-term public value", then: "we consistently undervalue our contribution and create the conditions for our own under-resourcing", url: "https://marianamazzucato.com/books/mission-economy" },
+      { if_: "we measure our own outputs rather than system outcomes", then: "we can report strong performance while the harm we exist to reduce continues unchecked", url: "https://humanlearning.systems" },
+      { if_: "we treat optimisation as a terminal activity rather than as a feed back into strategic reframing", then: "we improve within the current paradigm while the system we are trying to change evolves around us", url: "https://nesta.org.uk/report/the-open-book-of-social-innovation" },
+      { if_: "we fine-tune parameters rather than questioning whether the current structure, goals, or paradigm remain correct", then: "we optimise at the wrong leverage level and leave the fundamental problem untouched", url: "https://donellameadows.org/archives/dancing-with-systems" }
+    ],
+    uk: [
+      "HM Treasury Magenta Book (evaluation)",
+      "Green Book (post-completion appraisal)",
+      "IPA Gateway 5 (Benefits Realisation Evaluation)",
+      "Cabinet Office Evaluation Task Force standards",
+      "GIAA (internal audit standards)",
+      "NAO (external audit and VFM)",
+      "Managing Public Money",
+      "Spending Review evidence requirements",
+      "Better Regulation Framework (post-implementation review)",
+      "Functional Standards GovS 001–013",
+      "Parliamentary accountability (EFRA Committee; PAC)"
+    ],
+    primaryTo: [0], sigTo: [1, 3], someTo: [6]
+  }
+];
+
+// ─────────────────────────────────────────────
+//  SVG GEOMETRY
+// ─────────────────────────────────────────────
+const CX = 450, CY = 455, R = 295;
+const NW = 142, NH = 66, NRX = 7;
+const N = STAGES.length;
+
+function pos(i) {
+  const a = (Math.PI * 2 * i / N) - Math.PI / 2;
+  return { x: CX + R * Math.cos(a), y: CY + R * Math.sin(a), a };
+}
+
+function edgePoint(cx, cy, tx, ty) {
+  const dx = tx - cx, dy = ty - cy;
+  const len = Math.sqrt(dx*dx + dy*dy);
+  if (len < 1) return [cx, cy];
+  const nx = dx/len, ny = dy/len;
+  const hw = NW/2 + 3, hh = NH/2 + 3;
+  const tX = Math.abs(nx) < 0.0001 ? 1e9 : hw / Math.abs(nx);
+  const tY = Math.abs(ny) < 0.0001 ? 1e9 : hh / Math.abs(ny);
+  const t = Math.min(tX, tY);
+  return [cx + nx*t, cy + ny*t];
+}
+
+function pathD(si, ti, type) {
+  const s = pos(si), t = pos(ti);
+  const [x1, y1] = edgePoint(s.x, s.y, t.x, t.y);
+  const [x2, y2] = edgePoint(t.x, t.y, s.x, s.y);
+  const mx = (x1+x2)/2, my = (y1+y2)/2;
+  const vmx = mx - CX, vmy = my - CY;
+  const vmL = Math.sqrt(vmx*vmx + vmy*vmy);
+  let cpx = mx, cpy = my;
+  if (vmL > 1) {
+    const vx = vmx/vmL, vy = vmy/vmL;
+    const diff = Math.min(Math.abs(si-ti), N - Math.abs(si-ti));
+    if (diff <= 1) {
+      // Adjacent: very slight outward arc
+      cpx = mx + vx * 14;
+      cpy = my + vy * 14;
+    } else if (diff >= 4) {
+      // Long cross: very slight inward
+      cpx = mx - vx * 18;
+      cpy = my - vy * 18;
+    } else {
+      // Medium: nearly straight
+      cpx = mx - vx * 8;
+      cpy = my - vy * 8;
+    }
+  }
+  return `M${x1.toFixed(1)},${y1.toFixed(1)} Q${cpx.toFixed(1)},${cpy.toFixed(1)} ${x2.toFixed(1)},${y2.toFixed(1)}`;
+}
+
+// ─────────────────────────────────────────────
+//  BUILD SVG
+// ─────────────────────────────────────────────
+const svg = document.getElementById('network');
+
+function el(tag, attrs, text) {
+  const e = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  if (attrs) for (const [k,v] of Object.entries(attrs)) e.setAttribute(k,v);
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+
+// Defs: arrowhead markers
+const defs = el('defs');
+function marker(id, color) {
+  const m = el('marker', {id, markerWidth:'9', markerHeight:'9', refX:'8', refY:'4', orient:'auto', markerUnits:'strokeWidth'});
+  m.appendChild(el('path', {d:'M0,0 L0,8 L9,4 z', fill:color}));
+  return m;
+}
+defs.appendChild(marker('arr-primary', '#3d8c68'));
+defs.appendChild(marker('arr-sig',     '#8a6f3a'));
+defs.appendChild(marker('arr-some',    '#7a7870'));
+svg.appendChild(defs);
+
+// Background ring guide
+svg.appendChild(el('circle', {cx:CX, cy:CY, r:R, fill:'none', stroke:'rgba(0,0,0,0.07)', 'stroke-width':'1', 'stroke-dasharray':'2 10'}));
+
+
+// Edge layer
+const edgeLayer = el('g');
+const EDGES = [];
+
+STAGES.forEach(s => {
+  const addEdge = (ti, type) => {
+    const p = el('path', {
+      d: pathD(s.id, ti, type),
+      class: `edge ${type}`,
+      'marker-end': `url(#arr-${type})`
+    });
+    p.dataset.src = s.id;
+    p.dataset.tgt = ti;
+    p.dataset.type = type;
+    EDGES.push(p);
+    edgeLayer.appendChild(p);
+  };
+  s.someTo.forEach(t   => addEdge(t, 'some'));
+  s.sigTo.forEach(t    => addEdge(t, 'sig'));
+  s.primaryTo.forEach(t => addEdge(t, 'primary'));
+});
+svg.appendChild(edgeLayer);
+
+// Node layer
+const nodeLayer = el('g');
+const RECTS = [], LABELGROUPS = [];
+
+STAGES.forEach(s => {
+  const p = pos(s.id);
+  const g = el('g', {class: 'node-group', 'data-id': s.id});
+
+  const rect = el('rect', {
+    x: p.x - NW/2, y: p.y - NH/2,
+    width: NW, height: NH, rx: NRX, ry: NRX,
+    class: 'node-rect', id: `rect-${s.id}`
+  });
+
+  const lines = s.nodeLines;
+  const lineH = 14;
+  const totalH = (lines.length - 1) * lineH;
+  const startY = p.y - totalH/2 + 1;
+  const tg = el('g', {class:'node-label-g'});
+  lines.forEach((ln, i) => {
+    tg.appendChild(el('text', {
+      x: p.x, y: startY + i * lineH,
+      class: 'node-label', id: `lbl-${s.id}-${i}`,
+      'dominant-baseline': 'middle'
+    }, ln));
+  });
+
+  // Large hit target
+  const hit = el('rect', {
+    x: p.x - NW/2, y: p.y - NH/2,
+    width: NW, height: NH, rx: NRX, ry: NRX,
+    class: 'node-hit'
+  });
+  hit.addEventListener('click', () => selectStage(s.id));
+
+  g.appendChild(rect);
+  g.appendChild(tg);
+  g.appendChild(hit);
+  RECTS.push(rect);
+  LABELGROUPS.push(tg);
+  nodeLayer.appendChild(g);
+});
+svg.appendChild(nodeLayer);
+
+// ─────────────────────────────────────────────
+//  INTERACTION
+// ─────────────────────────────────────────────
+let selectedId = null;
+
+function selectStage(id) {
+  if (selectedId === id) { deselectAll(); return; }
+  selectedId = id;
+  const s = STAGES[id];
+
+  // Connected set
+  const connected = new Set([...s.primaryTo, ...s.sigTo, ...s.someTo]);
+  STAGES.forEach(st => {
+    if (st.primaryTo.includes(id) || st.sigTo.includes(id) || st.someTo.includes(id))
+      connected.add(st.id);
+  });
+
+  // Update nodes
+  RECTS.forEach((r, i) => {
+    r.classList.remove('selected', 'related', 'dimmed');
+    LABELGROUPS[i].querySelectorAll('text').forEach(t => {
+      t.classList.remove('selected','dimmed');
+    });
+    if (i === id) {
+      r.classList.add('selected');
+      LABELGROUPS[i].querySelectorAll('text').forEach(t => t.classList.add('selected'));
+    } else if (connected.has(i)) {
+      r.classList.add('related');
+    } else {
+      r.classList.add('dimmed');
+      LABELGROUPS[i].querySelectorAll('text').forEach(t => t.classList.add('dimmed'));
+    }
+  });
+
+  // Update edges
+  EDGES.forEach(e => {
+    const si = +e.dataset.src, ti = +e.dataset.tgt;
+    e.classList.remove('highlighted', 'dimmed');
+    (si === id || ti === id) ? e.classList.add('highlighted') : e.classList.add('dimmed');
+  });
+
+  renderPanel(s);
+}
+
+function deselectAll() {
+  selectedId = null;
+  RECTS.forEach(r => r.classList.remove('selected','related','dimmed'));
+  LABELGROUPS.forEach(lg => lg.querySelectorAll('text').forEach(t => t.classList.remove('selected','dimmed')));
+  EDGES.forEach(e => e.classList.remove('highlighted','dimmed'));
+  document.getElementById('panel').classList.remove('open');
+  document.getElementById('svg-wrap').classList.remove('panel-open');
+}
+
+// Click SVG background to deselect
+svg.addEventListener('click', e => {
+  if (e.target === svg || e.target.tagName === 'circle') deselectAll();
+});
+
+// ─────────────────────────────────────────────
+//  PANEL
+// ─────────────────────────────────────────────
+function renderPanel(s) {
+  document.getElementById('panel-name').textContent = s.name;
+  document.getElementById('panel-question').textContent = s.question;
+
+  // Connections
+  const cc = document.getElementById('panel-connections');
+  cc.innerHTML = '';
+  const chip = (text, cls, arrow, onClick) => {
+    const c = document.createElement('div');
+    c.className = `c-chip ${cls}`;
+    c.innerHTML = `<span class="chip-arrow">${arrow}</span>${text}`;
+    c.addEventListener('click', onClick);
+    cc.appendChild(c);
+  };
+  s.primaryTo.forEach(ti => chip(STAGES[ti].name, 'cp', '→', () => selectStage(ti)));
+  s.sigTo.forEach(ti     => chip(STAGES[ti].name, 'cs', '⇢', () => selectStage(ti)));
+  s.someTo.forEach(ti    => chip(STAGES[ti].name, 'cf', '↩', () => selectStage(ti)));
+  STAGES.forEach(st => {
+    if (st.primaryTo.includes(s.id)) chip(st.name, 'ci', '←', () => selectStage(st.id));
+  });
+
+  // Reset tabs
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.tab-btn[data-tab="purpose"]').classList.add('active');
+  renderTab('purpose', s);
+
+  document.getElementById('panel').classList.add('open');
+  document.getElementById('svg-wrap').classList.add('panel-open');
+}
+
+function renderTab(tab, s) {
+  const c = document.getElementById('panel-content');
+  if (tab === 'purpose') {
+    c.innerHTML = `<p class="p-text">${s.purpose}</p>`;
+  } else if (tab === 'capabilities') {
+    c.innerHTML = `<ul class="p-list">${s.capabilities.map(x=>`<li>${x}</li>`).join('')}</ul>`;
+  } else if (tab === 'outputs') {
+    c.innerHTML = `<ul class="p-list">${s.outputs.map(x=>`<li>${x}</li>`).join('')}</ul>`;
+  } else if (tab === 'pitfalls') {
+    c.innerHTML = s.pitfalls.map(f => {
+      const domain = f.url ? f.url.replace(/^https?:\/\//, '').split('/')[0] : '';
+      const linkHtml = f.url ? `<a class="failure-ref" href="${f.url}" target="_blank" rel="noopener">${domain}</a>` : '';
+      const thenHtml = f.then ? `<div class="failure-then"><span>then</span>${f.then}.</div>` : '';
+      return `<div class="failure-card">
+        <div class="failure-if"><span>If</span>${f.if_}…</div>
+        ${thenHtml}
+        ${linkHtml}
+      </div>`;
+    }).join('');
+  } else if (tab === 'uk') {
+    c.innerHTML = `<ul class="p-list">${s.uk.map(x=>`<li>${x}</li>`).join('')}</ul>`;
+  }
+}
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    if (selectedId !== null) renderTab(btn.dataset.tab, STAGES[selectedId]);
+  });
+});
+
+document.getElementById('panel-close').addEventListener('click', deselectAll);
+</script>
+</body>
+</html>
