@@ -516,7 +516,7 @@ const STAGES = [
       "Equality Act 2010 (public sector equality duty in framing)",
       "GovS 001 (Government Functions — scoping mandate)"
     ],
-    primaryTo: [2], sigTo: [3], someTo: [0]
+    primaryTo: [2], sigTo: [3], someTo: [0, 4]
   },
   {
     id: 2,
@@ -573,7 +573,9 @@ const STAGES = [
       "Quantitative data analysis and statistical modelling",
       "Population segmentation and profiling",
       "Systematic evidence review and meta-analysis",
-      "Research design (experimental, quasi-experimental, and observational study design)"
+      "Research design (experimental, quasi-experimental, and observational study design)",
+      "Project management",
+      "Programme management"
     ],
     outputs: [
       "Mechanism map (the causal structure producing current outcomes)",
@@ -613,6 +615,7 @@ const STAGES = [
       "Evaluation design (experimental, quasi-experimental, and mixed-methods approaches)",
       "Indicator development and baseline measurement",
       "Programme management (managing the outcomes and evaluation design workstream)",
+      "Project management",
       "Data architecture and measurement systems design"
     ],
     outputs: [
@@ -651,6 +654,7 @@ const STAGES = [
       "Feasibility assessment (technical, financial, and organisational viability analysis)",
       "Creative commissioning and brief writing",
       "Project management (scoping and managing concept design and feasibility projects)",
+      "Programme management",
       "Digital and technology landscape assessment",
       "Data requirements definition"
     ],
@@ -675,7 +679,7 @@ const STAGES = [
       "IPA Gateway 0 (Strategic Assessment)",
       "GDS Discovery phase (for digital options)"
     ],
-    primaryTo: [6], sigTo: [4], someTo: [3]
+    primaryTo: [6], sigTo: [4, 9], someTo: [3]
   },
   {
     id: 6,
@@ -800,7 +804,7 @@ const STAGES = [
       "Government Internal Audit Agency (GIAA) standards",
       "Orange Book (operational risk)"
     ],
-    primaryTo: [9], sigTo: [3], someTo: [7]
+    primaryTo: [9], sigTo: [3], someTo: [7, 0]
   },
   {
     id: 9,
@@ -841,7 +845,7 @@ const STAGES = [
       "Functional Standards GovS 001–013",
       "Parliamentary accountability (EFRA Committee; PAC)"
     ],
-    primaryTo: [0], sigTo: [1, 3], someTo: [6]
+    primaryTo: [0], sigTo: [1, 3, 5], someTo: [6]
   }
 ];
 
