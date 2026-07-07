@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Startup Journey — Thomas Murray</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Platypi:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#F8F5F0;--surface:#FFFFFF;--surface2:#F3EFE9;
+  --border:#E3DDD5;--border-lt:#EDE9E3;
+  --text:#1A1917;--text-2:#6B6460;--text-3:#A09488;
+  --green:#2D5A3D;--green-mid:#3D7A53;--green-bg:#EAF2ED;--green-bdr:#BAD4C3;
+  --s1:#7968A0;--s2:#4A7CA8;--s3:#3A8C72;
+  --s4:#5A8A38;--s5:#B5872A;--s6:#B5622A;--s7:#A03535;
+  --sc:var(--s1);
+}
+
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'Manrope',-apple-system,sans-serif;font-size:14px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+a{text-decoration:none;color:inherit}
+html{scroll-padding-top:110px}
+
+/* ── Nav ── */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:52px;background:var(--surface);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 40px;gap:32px;
+}
+.nav-logo{font-size:14px;font-weight:700;letter-spacing:-.2px;margin-right:auto}
+.nav a{font-size:13px;color:var(--text-2);transition:color .12s}
+.nav a:hover{color:var(--text)}
+
+.wrap{padding-top:52px;position:relative}
+
+/* ── Growth curve canvas ── */
+.curve-bg{
+  position:absolute;top:52px;left:0;right:0;
+  pointer-events:none;z-index:0;overflow:hidden;
+}
+#growthCurve{display:block;width:100%}
+.hero,.stage-bar,.panel-wrap{position:relative;z-index:1}
+
+/* ── Hero ── */
+.hero{max-width:860px;margin:0 auto;padding:80px 40px 140px}
+.hero h1{
+  font-size:54px;font-weight:500;line-height:1.07;
+  letter-spacing:-.9px;color:var(--text);margin-bottom:24px;
+}
+.hero h1 em{font-style:normal;font-weight:800;color:var(--green)}
+.hero-sub{font-family:'Platypi',Georgia,serif;font-weight:400;font-size:17px;line-height:1.72;color:var(--text-2);max-width:540px}
+
+/* ── Stage bar ── */
+.stage-bar{
+  position:sticky;top:52px;z-index:100;
+  background:transparent;
+  border-bottom:1px solid rgba(227,221,213,0.4);
+  transition:background .18s, border-color .18s,
+             -webkit-backdrop-filter .18s, backdrop-filter .18s;
+}
+/* Applied via JS once bar scrolls over panel content */
+.stage-bar.bar-stuck{
+  background:rgba(248,245,240,0.88);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  border-bottom-color:var(--border);
+}
+.stage-tabs{
+  display:flex;overflow-x:auto;
+  max-width:1440px;margin:0 auto;padding:0 40px;
+  scrollbar-width:none;
+}
+.stage-tabs::-webkit-scrollbar{display:none}
+.tab{
+  flex:none;cursor:pointer;user-select:none;
+  padding:14px 20px 11px;min-width:132px;
+  border-bottom:3px solid transparent;transition:background .12s;
+}
+.tab:hover{background:var(--surface2)}
+.tab-fund{
+  font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.4px;
+  color:var(--text-3);margin-bottom:4px;transition:color .12s;
+}
+.tab-name{
+  font-size:12px;font-weight:500;line-height:1.35;color:var(--text-2);
+  transition:color .12s,font-weight .12s;
+}
+.tab.on{border-bottom-color:var(--sc)}
+.tab.on .tab-fund{color:var(--sc)}
+.tab.on .tab-name{color:var(--text);font-weight:600}
+
+/* ── Panel ── */
+.panel-wrap{max-width:1440px;margin:0 auto;padding:0 40px 100px}
+.panel{animation:fadeUp .2s ease both}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* Stage header */
+.s-hdr{padding:40px 0 28px;border-bottom:1px solid var(--border)}
+.s-fund{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.6px;
+  color:var(--sc);margin-bottom:10px;
+}
+.s-fund::after{content:'';width:36px;height:1px;background:currentColor;opacity:.4}
+.s-hdr h2{font-size:28px;font-weight:500;letter-spacing:-.4px;line-height:1.2;margin-bottom:6px}
+.s-meta{font-size:12.5px;color:var(--text-3);margin-bottom:12px}
+.s-intro{font-size:15px;line-height:1.72;color:var(--text-2);max-width:740px}
+
+/* Column legend — 3 cols to match dim grid */
+.col-leg{
+  display:grid;grid-template-columns:148px 1fr 1fr;
+  border-bottom:1px solid var(--border);padding:10px 0 8px;
+}
+.cl{padding:0 20px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--text-3)}
+.cl.green-head{color:var(--green-mid)}
+
+/* ── Dimension rows ── */
+.dim{
+  display:grid;
+  /* label col | body (internally 2-col) */
+  grid-template-columns:148px 1fr;
+  border-bottom:1px solid var(--border-lt);
+  cursor:pointer;transition:background .1s;
+}
+.dim:hover{background:rgba(0,0,0,.016)}
+.dim.open{background:var(--surface)}
+
+/* Label column */
+.d-lbl{
+  padding:20px 14px;
+  border-right:1px solid var(--border-lt);
+  display:flex;flex-direction:column;gap:5px;
+}
+.d-icon{font-size:16px;line-height:1;margin-bottom:2px}
+.d-name{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.9px;color:var(--text-2)}
+.d-exp{
+  margin-top:auto;padding-top:14px;
+  font-size:10px;color:var(--text-3);
+  display:flex;align-items:center;gap:4px;
+}
+.d-exp svg{transition:transform .2s;flex-shrink:0}
+.dim.open .d-exp svg{transform:rotate(180deg)}
+
+/* Body: 2-column sub-grid — activities LEFT, contributions RIGHT */
+.d-body{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+}
+
+/* Each activity occupies one cell of the left column.
+   Its paired contribution occupies the adjacent right cell.
+   act-l + act-r are direct children of .d-body so the grid
+   auto-places them as a row pair. */
+.act-l{
+  padding:12px 20px;
+  border-right:1px solid var(--border-lt);
+  border-bottom:1px solid var(--border-lt);
+  font-size:13px;color:var(--text);line-height:1.52;
+  padding-left:32px;position:relative;
+  display:flex;align-items:flex-start;
+}
+.act-l::before{
+  content:'·';position:absolute;left:20px;top:12px;
+  color:var(--text-3);font-size:18px;line-height:1.15;
+}
+
+/* Activity that has a paired contribution — subtle green accent */
+.act-l.linked{
+  background:rgba(45,90,61,.024);
+  border-left:3px solid var(--green-bdr);
+  padding-left:29px;/* compensate for border */
+}
+.act-l.linked::before{left:17px}
+
+/* Extra (hidden until expanded) */
+.act-l.x,.act-r.x{display:none}
+.dim.open .act-l.x,.dim.open .act-r.x{display:flex}
+.act-r.x{display:none}
+.dim.open .act-r.x{display:block}
+
+/* Right cell — empty or contribution card */
+.act-r{
+  padding:12px 16px;
+  border-bottom:1px solid var(--border-lt);
+}
+
+/* Contribution card */
+.t-card{
+  border:1px solid var(--green-bdr);
+  border-left:3px solid var(--green);
+  border-radius:6px;padding:11px 14px 12px;
+  background:var(--green-bg);
+}
+.t-card-title{font-size:12.5px;font-weight:600;color:var(--green);line-height:1.38}
+.t-card-link{
+  display:inline-block;margin-top:6px;font-size:11.5px;font-weight:500;
+  color:var(--green);text-decoration:underline;text-underline-offset:2px;
+  text-decoration-color:var(--green-bdr);
+}
+.t-card-link:hover{text-decoration-color:var(--green);}
+.t-card-body{
+  display:none;font-size:12px;line-height:1.65;color:var(--text-2);margin-top:7px;
+}
+.dim.open .t-card-body{display:block}
+
+/* Outcome row spans both columns */
+.outcome-full{
+  grid-column:1/-1;
+  display:none;
+  padding:14px 20px;
+  border-top:1px solid var(--border-lt);
+  font-size:12px;color:var(--text-2);line-height:1.6;
+}
+.outcome-full strong{
+  font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.6px;color:var(--sc);margin-right:5px;
+}
+.dim.open .outcome-full{display:block}
+
+/* ── Mobile ── */
+@media(max-width:900px){
+  .nav{padding:0 20px;gap:20px}
+  .hero{padding:52px 20px 44px}
+  .hero h1{font-size:34px}
+  .hero-sub{font-size:15px}
+  .stage-tabs{padding:0 16px}
+  .panel-wrap{padding:0 16px 80px}
+
+  .col-leg{grid-template-columns:104px 1fr}
+  .cl.green-head{display:none}
+
+  /* Dim: label + single-column body */
+  .dim{grid-template-columns:104px 1fr}
+  .d-lbl{
+    padding:14px 10px;border-right:none;
+    border-bottom:1px solid var(--border-lt);
+    flex-direction:row;align-items:center;gap:8px;
+  }
+  .d-exp{display:none}
+
+  /* Body becomes single column on mobile:
+     act-l rows stack, act-r.has-contrib cards appear directly
+     below their paired act-l — the visual connection is preserved
+     because they are adjacent siblings in DOM order */
+  .d-body{grid-template-columns:1fr}
+  .act-l{border-right:none}
+  /* Hide empty right cells; show contribution cells below their act */
+  .act-r:not(.has-contrib){display:none!important}
+  .act-r.has-contrib{
+    padding:10px 16px 12px 20px;
+    border-bottom:1px solid var(--border-lt);
+    background:var(--green-bg);
+    border-left:3px solid var(--green);
+  }
+  .dim.open .act-r.has-contrib{display:block}
+  /* On mobile show has-contrib for preview rows always */
+  .act-r.has-contrib:not(.x){display:block}
+}
+
+@media(max-width:1024px){
+  .hero h1{font-size:42px}
+}
+@media(max-width:600px){
+  .hero h1{font-size:28px;letter-spacing:-.4px}
+  .tab{min-width:112px;padding:12px 14px 9px}
+  .tab-fund{font-size:10px}
+  .tab-name{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){.panel{animation:none}}
+
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="https://thomasmurray.earth/" class="nav-logo">Thomas Murray</a>
+  <a href="https://thomasmurray.earth/#about">About</a>
+  <a href="https://thomasmurray.earth/#work">Work</a>
+  <a href="https://thomasmurray.earth/#contact">Contact</a>
+</nav>
+
+<div class="wrap">
+  <div class="curve-bg" id="curveBg"><canvas id="growthCurve"></canvas></div>
+  <div class="hero">
+    <h1>Here's where<br><em>I fit in.</em></h1>
+    <p class="hero-sub">I've worked across the startup journey as an operator, adviser, and programme lead. Below is where that experience is sharpest — and what it looks like in practice.</p>
+  </div>
+
+  <div class="stage-bar">
+    <div class="stage-tabs" id="stageTabs"></div>
+  </div>
+  <div class="panel-wrap" id="panelWrap"></div>
+</div>
+
+<script>
+function esc(s){
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+const SC={1:'#7968A0',2:'#4A7CA8',3:'#3A8C72',4:'#5A8A38',5:'#B5872A',6:'#B5622A',7:'#A03535'};
+
+/* ── DATA ──────────────────────────────────────────────────────
+   Each act: { t: text, p: preview-visible, c: contribution|null }
+   c: { h: headline, b: body }
+   The contribution is placed in the grid cell DIRECTLY BESIDE
+   the activity it corresponds to — making the link visually obvious.
+──────────────────────────────────────────────────────────────── */
+const STAGES = [
+
+/* ══ 1 ═══════════════════════════════════════════════════════ */
+{
+  n:1, fund:`Pre-seed`, name:`Idea & Problem Discovery`,
+  meta:`Bootstrapped · 1–3 founders`,
+  intro:`Before you know what to build, you need to confirm the commercial problem is real and the right people have it. The discovery work at this stage sets the foundation for everything else.`,
+  dims:[
+    {
+      icon:`⊕`, name:`Operations & Automation`,
+      acts:[
+        {t:`Choose an entity structure compatible with institutional investment in your jurisdiction — restructuring after committing to investors is expensive and distracting to manage while simultaneously closing a round`,p:true,c:null},
+        {t:`Define co-founder roles, equity, and decision-making authority explicitly and in writing before starting`,p:true,c:{
+          h:`Co-founder governance & decision-rights design`,
+          b:`I design the governance framework that makes co-founder relationships durable before capital arrives: who owns which decisions, what requires consensus, and how disagreements get resolved. The legal documentation belongs to a lawyer — the decision architecture that makes it meaningful belongs to me. Getting clarity here before a fundraise is significantly cheaper than renegotiating it during one.`
+        }},
+        {t:`Set up the minimum viable operational stack: business banking, shared file storage, task tracking, and AI meeting notes — as low-cost as possible`,p:false,c:{
+          h:`AI-first operational setup`,
+          b:`I set up the complete administrative infrastructure from day one using AI tools: banking linked to automated accounting, document management, project tracking, and AI note-taking across every call. Everything is configured to run automatically and cost near-zero to maintain — no dedicated ops hire required. A founding team should spend its time on product and customers, not administrative overhead.`
+        }},
+        {t:`Document what you build as you build it — institutional knowledge captured from day one is far cheaper to capture than to reconstruct later`,p:false,c:{
+          h:`Knowledge-preservation infrastructure`,
+          b:`I designed the knowledge-preservation and learning system for local government agencies rolling out New Zealand's Natural and Build Environment Act. 'Learning by doing' only works if you encode the learnings, so I set up the database structure, learning conventions, and discipline to capture each lesson as we built new workflows and partnerships, meaning we never had to make the same mistake twice.`
+        }},
+      ],
+      outcome:`Core administrative infrastructure is in place and costs near-zero to run; co-founder roles, equity, and decision-making authority are documented and agreed before any outside capital is raised.`
+    },
+    {
+      icon:`⬡`, name:`Product`,
+      acts:[
+        {t:`Assess your technology readiness level (TRL) honestly — distinguish what is proven from what is assumed, so you don't build a commercial roadmap on a technical assumption that unravels when exposed to industrial or customer conditions`,p:true,c:null},
+        {t:`Define the specific problem the technology solves, not what it can do in principle — technology without a specific commercial problem attracts scientific interest but rarely converts to revenue`,p:true,c:null},
+        {t:`Avoid ideas that are scientifically interesting but solve no acute commercial problem — the technology version of a tarpit idea`,p:false,c:null},
+        {t:`Ask "why now?" — what change in cost, regulation, compute, or materials makes this problem solvable today?`,p:false,c:null},
+        {t:`Hold the problem tightly; hold the technical approach loosely — customer feedback and technical reality will reshape how you solve it, and committing prematurely to a specific solution prevents you from taking the better path when it emerges`,p:false,c:null},
+      ],
+      outcome:`The core technical insight is defensible, the problem is confirmed real by domain experts and potential customers, and the founders can articulate why this solution is viable now.`
+    },
+    {
+      icon:`◎`, name:`Market & Customers`,
+      acts:[
+        {t:`Conduct 20+ structured discovery interviews with potential buyers, specifiers, and operators — these are often different people in industrial markets`,p:true,c:{
+          h:`Customer discovery & decision-making unit mapping`,
+          b:`I design and run structured interviews with potential buyers, specifiers, and operators. I map who signs, who approves, who operates, and what each of them needs to see before they say yes. Then I synthesise the output into a documented customer profile the whole team can work from.`
+        }},
+        {t:`Map the full decision-making unit: who specifies, who approves budget, who runs the pilot, who operates? — walking into a commercial conversation without knowing who actually controls the purchase decision wastes time and reveals inexperience with the sector`,p:true,c:{
+          h:`Decision-making unit mapping`,
+          b:`Mapping a customer's authority structure — who holds formal power, who has informal influence, where decisions actually get made — is structurally the same work as designing governance frameworks for complex programmes. I've done this analysis repeatedly inside government: defining decision rights, escalation paths, and the approval sequences that make large programmes function. I apply the same discipline to map target customers' procurement structures before your team walks into the room.`
+        }},
+        {t:`Identify whether government is a likely early customer — governments are often the first and best customer for technology and industrial businesses`,p:false,c:{
+          h:`Government as early customer — pathway navigation`,
+          b:`At the Ministry for the Environment, I worked in strategic partnerships identifying and on-ramping startups and companies as government partners — including co-creating the Innovation Barometer with Creative HQ, an evaluation tool piloted across government and industry. I know how government buys, what it needs to see before it commits, and which parts of government are genuinely open to piloting new technology. I now bring that experience to the other side: helping startups assess whether government is a viable first customer and, if it is, how to navigate the path to a first engagement.`
+        }},
+        {t:`Assess market readiness: is the market aware the problem exists? Does it need educating before it will buy? — the answer determines whether your primary investment is in commercial sales or in market creation, which have very different cost structures and timelines`,p:false,c:null},
+        {t:`Find the beachhead: the smallest specific segment where the technology wins clearly and decisively — winning narrowly and completely is faster and cheaper than trying to win broadly and creates the reference cases that open adjacent segments`,p:false,c:null},
+      ],
+      outcome:`Target customer profile is documented with specific buyer, specifier, and economic decision-maker roles identified; the beachhead market segment is named and sized.`
+    },
+    {
+      icon:`↗`, name:`Go-to-Market`,
+      acts:[
+        {t:`Map the full value chain from raw material to end user — technology companies often enter mid-chain as a component, platform, or subsystem`,p:true,c:null},
+        {t:`Determine the primary go-to-market model: direct enterprise, licensing, government contracts, or platform — the answer shapes everything else`,p:true,c:null},
+        {t:`Identify whether buyers are found through technical conferences, government procurement, or industry relationships — not necessarily online channels`,p:false,c:null},
+        {t:`Assess the decision-making unit and typical procurement timeline for the target sector`,p:false,c:null},
+        {t:`Note which industry bodies, trade publications, and conferences your target customers trust — credibility travels through the channels buyers already use, not through the ones you prefer`,p:false,c:null},
+      ],
+      outcome:`The value chain is mapped, the route to a first paying customer is clearly identified, and the primary go-to-market model is chosen.`
+    },
+    {
+      icon:`$`, name:`Funding & Finance`,
+      acts:[
+        {t:`Bootstrap with personal savings and friends and family capital — keep burn near zero during the pre-validation phase`,p:true,c:null},
+        {t:`Identify and pursue non-dilutive government grants from innovation agencies, national research bodies, and sector-specific funds — most governments offer phased programmes that validate scientific merit without requiring equity`,p:true,c:{
+          h:`Grant strategy & application support`,
+          link:{url:`https://grant-analyzer-production.up.railway.app/`,text:`Find grants using my AI-powered app`},
+          b:`At the Ministry for the Environment, I worked in strategic partnerships helping startups navigate the grant application process — identifying the right programmes and structuring applications to match what funders were looking for. I know how government grant programmes work because I've operated inside them. I combine that direct experience with a grant-finder tool I've built to help founders identify the right funding opportunities and submit applications that land.`
+        }},
+        {t:`Understand how specialist investors evaluate pre-revenue companies: technology readiness, team credibility, and IP position matter as much as market size`,p:false,c:null},
+        {t:`Know your funding timeline: pre-revenue phases for hardware and science-based businesses typically last 2–4 years; runway preservation is existential`,p:false,c:null},
+      ],
+      outcome:`18+ months of runway is secured; a non-dilutive grant strategy is identified and the first application is prepared or in progress.`
+    },
+  ]
+},
+
+/* ══ 2 ═══════════════════════════════════════════════════════ */
+{
+  n:2, fund:`Pre-seed / Angel`, name:`Build & Launch`,
+  meta:`2–6 people`,
+  intro:`While you're building, commercial relationship-building has to start. Enterprise and industrial customers have long qualification cycles — the time to be in their system is now, not when the prototype is ready.`,
+  dims:[
+    {
+      icon:`⊕`, name:`Operations & Automation`,
+      acts:[
+        {t:`Define the company's operating rhythm: weekly team sync, monthly financial review — design cadences that will scale, not ones you'll have to replace`,p:true,c:{
+          h:`Operating rhythm & governance cadence design`,
+          b:`I design the cadences that will still work when the company is ten times its current size: weekly team alignment, monthly financial review, quarterly strategy check-in — each with a clear purpose, the right participants, and a format that generates decisions rather than updates. I've run governance design in complex multi-team programmes where getting the rhythm right directly determined whether decisions were made on time.`
+        }},
+        {t:`Map the 3–5 core workflows the team runs every week and deliberately design each one to be automatable`,p:true,c:{
+          h:`Core workflow mapping & automation design`,
+          b:`I map the workflows the team runs every week and redesign each one for automation: the current manual steps, where decisions are made, what can be handled by AI, and what still needs a human. Using Claude Code and Cowork, I build the automated versions. The result is a team that spends its time on work that requires judgement, not on administration that runs itself.`
+        }},
+        {t:`Set up payroll and contractor payment automation — configure it once so it runs without ongoing founder involvement`,p:false,c:{
+          h:`Payroll & contractor payment automation`,
+          b:`I configure payroll and contractor payment systems to run without ongoing founder involvement: integration with accounting, automated tax calculations where the platform handles them, and a payment run the finance function executes without touching a spreadsheet. The compliance knowledge belongs to a payroll specialist — I build the system that makes the process frictionless.`
+        }},
+        {t:`Set up AI-native accounting: automatic transaction categorisation, bank reconciliation, and real-time burn and runway tracking`,p:false,c:{
+          h:`AI-native accounting & burn tracking`,
+          b:`I connect accounting tools to banking data, configure automated transaction categorisation, and build real-time burn and runway dashboards that update without anyone compiling them manually. Founders should be reading their financial position as a decision-making input, not constructing it from raw data — I set up the system that makes that possible from the start.`
+        }},
+        {t:`Build expense submission through an app rather than email or spreadsheet — make compliance the path of least resistance`,p:false,c:null},
+      ],
+      outcome:`Core financial operations — payroll, expenses, and bookkeeping — run automatically with minimal founder involvement; the team's operating rhythm and core workflows are established, documented, and designed to scale.`
+    },
+    {
+      icon:`⬡`, name:`Product`,
+      acts:[
+        {t:`Build a working prototype that demonstrates the core technical claim is real — for physical products this means a bench-scale demonstration at an early TRL`,p:true,c:{
+          h:`Agile programme management & design sprint facilitation`,
+          b:`Before the final product shape is known, the work still needs to stay coordinated — which is where structured agile project management makes a real difference. I run sprint planning, standups, retrospectives, and reviews across the team and any external partners, keeping prototyping, planning, and delivery aligned without generating overhead. As Senior Project Manager on the Tranche Regions programme at the Ministry for the Environment, we worked from day one without knowing what the final system would look like. I established partnerships with regional bodies and piloted different elements of the system with those partners to discover what worked, leading the agile ceremonies that kept a team of 12 specialists and external partners coordinated throughout. That same discipline applies directly to early prototype work.`
+        }},
+        {t:`Apply design for scalability from day one: build as if someone else must deliver the product or service at volume — for physical products this means DFM; for software and services it means serviceability, repeatability, and documentation that doesn't require the founder to explain every step`,p:true,c:null},
+        {t:`Apply the 90/10 principle: 90% of the value should come from the core technical differentiation, not peripheral features`,p:false,c:null},
+        {t:`File provisional patents before any conference presentation or customer disclosure — public disclosure before filing can permanently invalidate IP in key jurisdictions, and it is one of the most common irreversible early mistakes`,p:false,c:null},
+        {t:`Show the prototype to 10+ potential users or technical experts for structured feedback — structured feedback at this stage is cheap; the same feedback after specification freeze is expensive`,p:false,c:null},
+      ],
+      outcome:`A working prototype demonstrates the core technical claim and has been validated by at least 5 domain experts or potential end users.`
+    },
+    {
+      icon:`◎`, name:`Market & Customers`,
+      acts:[
+        {t:`Engage potential lighthouse customers before the product is ready — complex enterprise and industrial sales cycles are 12–18 months or longer`,p:true,c:{
+          h:`Lighthouse customer engagement`,
+          b:`I get you in front of the customers who matter. I've built senior stakeholder relationships across government, industry, and science, and I can open the right doors and run the conversations that count — particularly in sectors where credibility has to be established before any commercial conversation can happen.`
+        }},
+        {t:`Provide direct access to the founding team — sophisticated buyers in technical markets expect substantive dialogue, not sales presentations`,p:true,c:null},
+        {t:`Seek a co-development agreement with a strategic partner who can validate, co-fund, and potentially become a first customer`,p:false,c:{
+          h:`Full-lifecycle strategic partnership development`,
+          b:`I've built and managed strategic partnerships from scratch inside complex organisations — identifying the right counterparty, establishing the relationship, structuring the terms, launching the work, and managing both the relationship and the deliverables over time. At the Ministry for the Environment, I established a multi-component partnership with Creative HQ that included a government-backed climate tech accelerator and contributed to New Zealand's first GovTech programme. I bring that same full-lifecycle approach to commercial partnerships: from first contact through to a signed agreement and active delivery.`
+        }},
+        {t:`Prioritise customers with internal technical capability to evaluate the product quickly`,p:false,c:null},
+        {t:`Prioritise getting a signed letter of intent or development agreement from one credible customer over 1,000 expressions of interest`,p:false,c:null},
+      ],
+      outcome:`3–5 credible potential customers are actively engaged, and at least one has agreed in principle to participate in a co-development or pilot programme.`
+    },
+    {
+      icon:`↗`, name:`Go-to-Market`,
+      acts:[
+        {t:`Use technical conferences and industry events as the primary early go-to-market channel — present results, not marketing materials`,p:true,c:null},
+        {t:`Publish academic papers and file patents to build long-term credibility with sophisticated buyers`,p:true,c:null},
+        {t:`Engage industry bodies and consortia — membership signals seriousness and opens doors`,p:false,c:null},
+        {t:`Do things that don't scale: personally reach every relevant prospect through direct technical outreach`,p:false,c:null},
+        {t:`Identify specific target companies and map your network to technical decision-makers inside them`,p:false,c:null},
+      ],
+      outcome:`5+ credible target customer relationships are active; technical credibility is established through publications, conference presence, or expert endorsement.`
+    },
+    {
+      icon:`$`, name:`Funding & Finance`,
+      acts:[
+        {t:`Target government innovation grant second-phase awards — winning at the technical feasibility stage meaningfully improves the probability of attracting venture capital`,p:true,c:{
+          h:`Grant funding strategy & applications`,
+          link:{url:`https://grant-analyzer-production.up.railway.app/`,text:`Find grants using my AI-powered app`},
+          b:`While you're building, you should also be filing for non-dilutive funding. I map what's available across government grants, innovation programmes, and sector-specific funds, assess where you're most likely to win, and build the applications. I've worked inside government funding programmes, so I know what a strong application looks like from the assessor's side.`
+        }},
+        {t:`Raise pre-seed from specialist angels or venture capital with domain knowledge in your sector, typically via convertible note or SAFE instrument`,p:true,c:null},
+        {t:`Consider corporate venture capital from strategic industry players as a pre-seed investor — they understand the technology and can become first customers`,p:false,c:null},
+        {t:`Apply for government match-funding programmes where qualifying outside investment triggers additional non-dilutive capital`,p:false,c:null},
+        {t:`Raise quickly, return to technical work immediately — fundraising is not progress`,p:false,c:null},
+      ],
+      outcome:`Non-dilutive grant funding from government innovation programmes is secured or in progress, meaningfully reducing equity dilution during the highest-risk technical phase.`
+    },
+  ]
+},
+
+/* ══ 3 ═══════════════════════════════════════════════════════ */
+{
+  n:3, fund:`Seed`, name:`Finding Product–Market Fit`,
+  meta:`3–15 people`,
+  intro:`Pilots need clear success criteria and customers need to be qualified properly. The operational infrastructure built earlier now needs to extend outward — from managing the founding team's own work to managing external commitments with customers and partners.`,
+  dims:[
+    {
+      icon:`⊕`, name:`Operations & Automation`,
+      acts:[
+        {t:`Establish the decision-making and communication framework: who owns which decisions, how escalations work, and how the team shares information across functions`,p:true,c:{
+          h:`Decision-rights & communication architecture`,
+          b:`I design the framework that keeps a growing team coordinated without creating bottlenecks: explicit decision rights for each function, a clear escalation path for decisions that cross boundaries, and information-sharing structures that give people what they need without generating noise they don't. I've designed these systems repeatedly in complex multi-team environments where ambiguity about who owns a decision was the primary cause of delay.`
+        }},
+        {t:`Set up a lightweight goal-tracking framework — small enough to fit in a shared document, disciplined enough to actually hold the team accountable`,p:true,c:{
+          h:`Lightweight goal-tracking & OKR design`,
+          b:`I set up a goal-tracking framework scaled to the team's current size: strategic goals linked to measurable milestones, tracked in a shared document or lightweight tool, with a review cadence that generates accountability without adding overhead. I've designed performance tracking systems inside complex multi-team programmes where the team needed to stay accountable to clear goals without the overhead of enterprise planning tools — and where a system that got abandoned was worse than none at all. The same principle applies here.`
+        }},
+        {t:`Build an HR system covering employment contracts, onboarding, leave management, and policy distribution — email-based HR creates compliance gaps and inconsistency that become costly to resolve under employment legislation as the team grows`,p:false,c:{
+          h:`HR system design & automation`,
+          b:`I design the HR system architecture and build the automation layer: employment contract generation, structured onboarding sequences, leave management, and policy distribution — all handled through purpose-built systems rather than email threads. The employment contract content belongs to a lawyer; I build the system that generates, stores, and tracks it consistently across the team.`
+        }},
+        {t:`Build AI-assisted contract drafting for standard agreements — personally review and sign off on material commercial terms only`,p:false,c:{
+          h:`AI-assisted contract drafting workflow`,
+          b:`I build the AI workflow that drafts standard commercial agreements — NDAs, co-development terms, supplier agreements — from structured inputs, reducing a multi-day legal task to a review-and-sign exercise. Material terms still require founder sign-off and legal review; I build the system that handles everything up to that point.`
+        }},
+        {t:`Build an automated financial dashboard drawing directly from banking and accounting data — review it actively to make decisions rather than compiling it manually`,p:false,c:{
+          h:`Automated financial dashboard`,
+          b:`I've built automated financial dashboards from scratch for large organisations — pulling data directly from accounting and banking systems, structuring it into the metrics that matter for decisions, and eliminating the manual compilation step entirely. The dashboard the finance team looks at every week should update itself; I build the version that does.`
+        }},
+      ],
+      outcome:`Founders spend fewer than two hours per week on routine administration; operational data — burn, runway, and key milestones — is visible in real time without anyone compiling it manually.`
+    },
+    {
+      icon:`⬡`, name:`Product`,
+      acts:[
+        {t:`Iterate on the application of the technology based on customer feedback — the problem/solution fit often shifts from the initial hypothesis`,p:true,c:null},
+        {t:`Pursue a co-development agreement or letter of intent with genuine commercial intent from a credible customer — for businesses with long development or sales cycles, this is the PMF signal that matters, far more reliably than engagement metrics that reflect curiosity rather than willingness to pay`,p:true,c:null},
+        {t:`Pursue independent technical validation: expert panel, academic publication, or third-party laboratory verification`,p:false,c:null},
+        {t:`Avoid premature specification freeze — keep design options open until customer needs are confirmed through pilots`,p:false,c:null},
+        {t:`When considering a pivot, lean into your core IP and domain expertise rather than away from it`,p:false,c:null},
+      ],
+      outcome:`An anchor customer has signed a pilot agreement with defined success criteria and credible commercial intent — the definitive PMF signal for businesses with long development or sales cycles.`
+    },
+    {
+      icon:`◎`, name:`Market & Customers`,
+      acts:[
+        {t:`Push for a signed pilot agreement with defined success criteria from an anchor customer — not a vague letter of interest. The discipline of agreeing measurable criteria upfront protects both parties and gives you the evidence base needed to close the next customer`,p:true,c:null},
+        {t:`Understand the customer's full qualification process and procurement timeline — these determine the real sales cycle length`,p:true,c:{
+          h:`Customer qualification pathway mapping`,
+          b:`Understanding how a customer qualifies a new supplier — the internal approvals, technical evaluations, risk assessments, and commercial gates — requires the same analytical approach as mapping decision rights inside a complex organisation. I've designed governance and approval structures for large programmes and apply that discipline here: documenting the exact qualification steps each customer type requires, so your commercial team knows where each deal sits and what will unlock the next stage.`
+        }},
+        {t:`Qualify hard: avoid customers who want free evaluations without commercial commitment`,p:false,c:null},
+        {t:`Document what the customer would need to see to sign a production contract after the pilot`,p:false,c:null},
+        {t:`Track customers who walk away and understand why — this is as informative as those who stay`,p:false,c:null},
+      ],
+      outcome:`At least one anchor customer is running a structured, paid pilot with defined success criteria and a documented path to a commercial purchase decision.`
+    },
+    {
+      icon:`↗`, name:`Go-to-Market`,
+      acts:[
+        {t:`Assemble a technical advisory board with industry insiders to validate the approach and open doors that cold outreach cannot`,p:true,c:null},
+        {t:`Use white papers, technical presentations, and third-party validation as primary marketing assets — credibility precedes pipeline in technical and industrial markets`,p:true,c:null},
+        {t:`Structure the first commercial engagement as a co-development or joint development agreement rather than a standard sale — it aligns your incentives with the customer's, generates revenue during development, and produces a proof of concept that future customers can evaluate rather than simply take on faith`,p:false,c:null},
+        {t:`Run small channel experiments — direct outreach, government grants or contracts, corporate research partnerships — to learn which brings customers who convert`,p:false,c:{
+          h:`Government contracts as a channel`,
+          b:`Government contracts are easily dismissed as too slow at this stage, but for startups in regulated sectors or adjacent to public services, a single development contract delivers non-dilutive revenue, credibility, and commercial validation that private buyers use as a signal. Having worked inside a government ministry managing strategic partnerships with startups, I know which programmes are worth approaching, what they need to see, and how to avoid the procurement traps that consume a founding team's time without producing a contract.`
+        }},
+        {t:`Hold back significant marketing investment until the commercial engagement model is proven with at least one paying customer — spending on reach before the value proposition is validated burns capital on an audience you cannot yet convert`,p:false,c:null},
+      ],
+      outcome:`A co-development or lighthouse customer engagement is active with defined milestones; the sales process from first contact to signed agreement is understood.`
+    },
+    {
+      icon:`$`, name:`Funding & Finance`,
+      acts:[
+        {t:`Raise a seed round from specialist investors who understand 5–7 year timelines to liquidity`,p:true,c:{
+          h:`Investment readiness & business case development`,
+          b:`I build the business case that gets funding across the line. I've developed rigorous cost-benefit analyses for government programmes worth millions of dollars. Structurally, this is the same work a startup does when pitching investors: a clear logic connecting investment to outcomes, with numbers that hold up to scrutiny. I build that case, stress-test it, and make sure it reads the way it needs to before it goes in front of anyone who matters.`
+        }},
+        {t:`Pursue government development contracts and co-funded pilots as early revenue — treat these as market validation, not just income`,p:true,c:null},
+        {t:`Reframe your planning horizon: for long-cycle businesses, profitability may be 5+ years away — focus on milestone-to-next-round, not break-even date`,p:false,c:null},
+        {t:`Build a credible COGS model at production scale even before you have production — investors will ask`,p:false,c:null},
+        {t:`Track burn separately for technical milestones and commercial milestones — know what each unit of capital is buying`,p:false,c:null},
+      ],
+      outcome:`Seed round closed with investors who understand longer commercialisation timelines; capital is sufficient to reach a funded pilot with an anchor customer.`
+    },
+  ]
+},
+
+/* ══ 4 ═══════════════════════════════════════════════════════ */
+{
+  n:4, fund:`Seed / Series A`, name:`Early Traction`,
+  meta:`10–40 people · First commercial revenue`,
+  intro:`Real customers bring real operational pressure. You need process documentation that works without the founder in every conversation, quality frameworks that satisfy enterprise procurement, and commercial agreements that protect you. This is where my core skill set lands hardest.`,
+  dims:[
+    {
+      icon:`⊕`, name:`Operations & Automation`,
+      acts:[
+        {t:`Provide strategic narrative to board and investors, supported by an automated board pack that pulls financial data and key metrics without manual compilation`,p:true,c:{
+          h:`Board pack automation & investor narrative`,
+          b:`I build both the automated board pack and the strategic narrative that sits inside it. Financial data, key metrics, and milestone progress assemble automatically from connected systems — no manual compilation before board meetings. I work with other leaders on the narrative layer: how to frame progress against previous commitments, and what decisions should be made.`
+        }},
+        {t:`Build approval workflows for expenses, contracts, and purchase orders — replace ad hoc emails with structured, auditable digital processes so the commercial team moves faster and nothing material gets approved outside a traceable process`,p:false,c:{
+          h:`Digital approval workflow`,
+          b:`I build structured approval workflows using AI tooling: clear thresholds, automated routing, and a complete audit trail. At the UK Food Standards Agency, I built AI-optimised operational processes from scratch for a complex regulatory programme — including workflow structures that made compliance the path of least resistance rather than an overhead. I apply the same approach to commercial approval processes: remove the friction, preserve the governance.`
+        }},
+        {t:`Build automated compliance tracking for regulatory deadlines, insurance renewals, and certification expiries`,p:false,c:{
+          h:`Automated compliance & deadline tracking`,
+          b:`I build the compliance tracking system that ensures no deadline or requirement is missed, without relying on a manual calendar maintained by a single person. My regulatory background tells me what the requirements are and how to meet them; my AI capability builds the automated system that manages compliance.`
+        }},
+        {t:`Build automated pipeline tracking from email and calendar activity — free the commercial team from data entry entirely`,p:false,c:{
+          h:`Automated pipeline tracking`,
+          b:`I build the CRM automation that captures pipeline activity from email and calendar data without requiring the commercial team to log anything manually: contact updates, meeting notes, follow-up tasks, and stage progression all inferred and recorded automatically. The commercial team gets to sell; the CRM updates itself.`
+        }},
+      ],
+      outcome:`The logistics of information management don't take up time or cost money; you get to focus on the strategic choices and conversations that define your success.`
+    },
+    {
+      icon:`⬡`, name:`Product`,
+      acts:[
+        {t:`Complete a production feasibility review before committing to tooling, infrastructure, or significant capital expenditure — for physical products this means a full DFM review`,p:true,c:null},
+        {t:`Conduct a first controlled production run or beta release (10–100 units or equivalent): measure quality, cycle time, and unit cost against targets`,p:true,c:{
+          h:`Production run programme management`,
+          b:`I project manage the first controlled run as a programme: work breakdown, task ownership, timing, and quality checkpoints defined before the run starts, with a structured retrospective built in at the end. The run generates data; the programme management is what turns that data into a documented, repeatable process the team can hand off and improve without relearning from scratch each time.`
+        }},
+        {t:`Lock the product specification after incorporating pilot customer feedback — changes after specification freeze are expensive regardless of product type`,p:false,c:null},
+        {t:`Instrument the build or production process: track quality rates, failure modes, and rework requirements from day one — you cannot improve a process you are not measuring, and retrospectively reconstructing this data from memory is unreliable`,p:false,c:null},
+        {t:`Build production documentation (specifications, test protocols, quality criteria) that can be executed without the founding team's direct involvement`,p:false,c:{
+          h:`Operational documentation & process infrastructure`,
+          b:`I build the documentation and process infrastructure that lets a business run without the founding team's direct involvement in everything: procedures, protocols, quality criteria, handover materials. At the UK Food Standards Agency, I came in as the first dedicated resource on a complex regulatory programme and built the entire operational backbone from scratch.`
+        }},
+      ],
+      outcome:`Pilot build results are documented, production feasibility is confirmed, product specification is frozen, and unit economics at target volume are modelled with real cost data.`
+    },
+    {
+      icon:`◎`, name:`Market & Customers`,
+      acts:[
+        {t:`Validate the value proposition with 3+ paying pilot customers across different buyer profiles`,p:true,c:null},
+        {t:`Build lightweight customer success around technical or applications expertise — buyers of complex products need solutions support, not relationship management`,p:true,c:null},
+        {t:`Prioritise customers who can become public reference accounts — credibility is the primary marketing asset for businesses selling complex or technical products`,p:false,c:null},
+        {t:`Track time-to-value for each customer: products with long sales cycles must show demonstrable return on investment within the pilot period`,p:false,c:null},
+        {t:`Map the full procurement qualification process for each customer type; this is the sales funnel that matters`,p:false,c:{
+          h:`Procurement qualification mapping`,
+          b:`Mapping each customer's procurement process — the approval thresholds, technical evaluation criteria, probity requirements, and commercial gates — is analytical work I approach with the same rigour I applied to designing governance structures for large programmes. I document the qualification pathway for each customer type, identify where deals commonly stall and why, and give the commercial team a repeatable map rather than an account manager's incomplete memory of how the last deal worked.`
+        }},
+      ],
+      outcome:`3+ paying customers have completed successful pilots with documented evidence of value delivered, and at least one is willing to serve as a public reference.`
+    },
+    {
+      icon:`↗`, name:`Go-to-Market`,
+      acts:[
+        {t:`Lead sales to first commercial customers as founders — complex buying decisions require the technical depth and conviction only founders can provide`,p:true,c:null},
+        {t:`Execute the full sales motion for complex products: technical seminar → site visit → pilot agreement → commercial contract — understand each step deliberately`,p:true,c:null},
+        {t:`Manage long sales cycles systematically: track opportunities by stage, not just current revenue`,p:false,c:null},
+        {t:`Set pricing on a value basis, not cost-plus — anchor to the economic value unlocked, not to component or production cost`,p:false,c:null},
+        {t:`Use funded development contracts to generate revenue during the sales cycle and validate commercial intent`,p:false,c:{
+          h:`Government funded development contract navigation`,
+          b:`Funded development contracts from government agencies are among the best early revenue sources for technology startups — non-dilutive, credibility-building, and often a direct path to a production contract. Having worked inside a government ministry managing strategic partnerships with early-stage companies, I know what these contracts require from both sides: how to identify the right programme, how to position the proposal, and how to manage the relationship through to a signed agreement.`
+        }},
+      ],
+      outcome:`First commercial contract is signed; the end-to-end sales process is documented; founders can articulate what triggers each stage of the buyer's decision.`
+    },
+    {
+      icon:`$`, name:`Funding & Finance`,
+      acts:[
+        {t:`Generate first commercial revenue to change the funding narrative — even a small development contract signals market acceptance to investors`,p:true,c:null},
+        {t:`Raise a Series A by demonstrating anchor customer evidence, technical readiness progression, and a credible path to scalable production`,p:true,c:{
+          h:`Series A narrative & investor reporting`,
+          b:`Raising a Series A is a different exercise from raising seed. Investors at this stage want commercial evidence, not just a credible hypothesis — paying customers, unit economics, and a clear production path. I've built rigorous business cases for government programmes worth tens of millions of dollars, connecting investment to outcomes with numbers that hold up to scrutiny. The structural work is the same: assembling the evidence, building the logic, and presenting it in a form that earns confidence. I package that into a Series A narrative and set up the investor reporting cadence that maintains momentum between first meetings and a signed term sheet.`
+        }},
+        {t:`Diversify funding across venture equity, government contracts, and strategic industry investment to reduce dilution and validate commercialisation`,p:false,c:{
+          h:`Larger-scale grant funding`,
+          link:{url:`https://grant-analyzer-production.up.railway.app/`,text:`Find grants using my AI-powered app`},
+          b:`First commercial revenue opens up a tier of grant funding that wasn't available earlier: larger government programmes, industry co-investment schemes, and innovation funds that require evidence of commercial traction to qualify. I identify what you're now eligible for, build the applications, and manage the relationships with funders.`
+        }},
+        {t:`Track and report technical and operational readiness progress as primary metrics in investor updates alongside commercial milestones — investors in deep-tech and capital-intensive businesses need confidence that the product can be delivered at scale, not just demonstrated in controlled conditions`,p:false,c:null},
+        {t:`Model capital expenditure requirements for the production or delivery ramp carefully — capital-intensive businesses consistently underestimate infrastructure and capacity costs, and the gap between model and reality is one of the most common causes of mid-growth funding emergencies`,p:false,c:null},
+      ],
+      outcome:`First commercial revenue received; unit economics are understood; Series A case can be clearly articulated around technical progress and anchor customer evidence.`
+    },
+  ]
+},
+
+/* ══ 5 ═══════════════════════════════════════════════════════ */
+{
+  n:5, fund:`Series A / B`, name:`Growth`,
+  meta:`40–150 people · Growing commercial revenue`,
+  intro:`With paying customers and a production process, operational demands scale fast. I design the management infrastructure, formalise board governance, and build the automated systems that take repetitive work off the team's plate.`,
+  dims:[
+    {
+      icon:`⊕`, name:`Operations & Automation`,
+      acts:[
+        {t:`Design the functional operating model explicitly: how teams interact, escalate, and report, and who owns which decisions at each level — without explicit design, the operating model defaults to whoever shouts loudest, which is a poor substitute for a structure`,p:true,c:{
+          h:`Functional operating model design`,
+          b:`I design the operating model explicitly: which decisions are made at which level, how teams interact across functions, and what information flows where. As Principal Advisor for Organisational Strategy and Change at the Ministry for the Environment, I designed the operating model for a 40% organisational expansion — building the structure, decision rights, and operating rhythms that allowed the organisation to execute its strategy at its new scale. I bring that same rigour to growing companies: a deliberately designed operating model rather than one that accretes organically and silently limits the business.`
+        }},
+        {t:`Transition from founder-managed spend to functional budget ownership — build automated variance tracking against plan so budget holders can see their position in real time`,p:true,c:{
+          h:`Budget delegation & real-time variance tracking`,
+          b:`I design the budget delegation framework — what each function owns, what requires central approval, and how budget holders are held accountable — and build the automated variance tracking that shows each function their position against plan in real time. I've done this for several multi-million pound programmes. Leaders stop managing spend decisions; budget holders have the information they need to manage their own.`
+        }},
+        {t:`Build full HR lifecycle automation covering hiring workflows, onboarding sequences, performance review cycles, and offboarding — remove manual coordination from routine people operations`,p:false,c:{
+          h:`HR lifecycle automation programme`,
+          b:`I design and build end-to-end HR lifecycle automation: I've set up structured onboarding sequences and performance review rhythms — all systematised so the People team manages exceptions rather than coordinating each instance. My programme management background means I run this as a proper implementation: scoped, sequenced, and handed over to a quality standard.`
+        }},
+        {t:`Deploy AI customer support to resolve routine queries automatically — design escalation routing so humans receive full customer context before engaging`,p:false,c:null},
+        {t:`Build the management information system: define which metrics matter and at what cadence, then automate data collection so reporting requires judgement, not compilation`,p:false,c:{
+          h:`Management information system design & build`,
+          b:`I designed and built the management information system used by the executive team at the Ministry for the Environment — defining which metrics mattered at which cadence, connecting the data sources, and building the automated reporting layer so leadership made decisions from it rather than constructed it. I apply the same approach at startup scale: the metrics that drive the business, updated automatically, reviewed actively.`
+        }},
+      ],
+      outcome:`The functional operating model is explicitly designed and documented; routine people operations and customer support run automatically; management reporting requires judgement and decision-making, not compilation.`
+    },
+    {
+      icon:`⬡`, name:`Product`,
+      acts:[
+        {t:`Move from pilot to first full production or delivery run with a third-party production partner or in-house facility — the transition from prototype to repeatable delivery is a programme management challenge as much as a technical one`,p:true,c:{
+          h:`Production ramp programme management`,
+          b:`Scaling from pilot to first full production or delivery run — especially through a third-party partner — requires scope agreement, quality gate definition, supplier relationship management, and schedule discipline to be active simultaneously. I run this transition as a formal programme, with clear milestones, accountability, and a structured learning capture so that what the first run reveals about cost, yield, and process time gets encoded rather than lost.`
+        }},
+        {t:`Track the production learning curve — unit cost should fall predictably with each doubling of cumulative production (Wright's Law)`,p:true,c:null},
+        {t:`Run a yield improvement programme: measure overall process yield at each production step; attack the highest-impact failure modes first`,p:false,c:null},
+        {t:`Optimise bill of materials cost through supplier development, volume pricing, and design-for-cost revisions`,p:false,c:null},
+        {t:`Build an operational readiness roadmap from current state to full production or delivery scale over 12–18 months — mapping the capability gaps, capital requirements, and hiring milestones that sit between where you are now and where you need to be`,p:false,c:null},
+      ],
+      outcome:`First production run achieves target yield and a COGS trajectory that supports viable unit economics — the learning curve is working and cost per unit is falling predictably.`
+    },
+    {
+      icon:`◎`, name:`Market & Customers`,
+      acts:[
+        {t:`Model customer acquisition cost and lifetime value carefully in complex B2B markets: account for 12–18 month sales cycles and high annual contract values — payback periods of 2–3 years are normal`,p:true,c:null},
+        {t:`Build customer success around technical outcomes, not product adoption metrics`,p:true,c:null},
+        {t:`Initiate first strategic OEM or channel partner engagement — one OEM partnership can unlock markets that would cost significantly more to reach directly`,p:false,c:null},
+        {t:`Develop a pipeline 3–4× the revenue target — long sales cycles demand deep pipeline inventory`,p:false,c:null},
+        {t:`Build a reference customer programme: documented case studies with quantified return on investment are the primary marketing asset`,p:false,c:null},
+      ],
+      outcome:`A repeatable customer acquisition process is proven with 2+ customer segments; reference customers can be named publicly; first OEM or channel partner relationship is active.`
+    },
+    {
+      icon:`↗`, name:`Go-to-Market`,
+      acts:[
+        {t:`Hire the first commercial or business development lead with existing relationships in the target sector — network matters more than sales technique at this stage`,p:true,c:null},
+        {t:`Document and systematise the commercial process so it can be executed without the founder in every conversation`,p:true,c:null},
+        {t:`Identify and approach potential OEM partners who can scale distribution at lower cost than direct sales`,p:false,c:null},
+        {t:`Pursue government engagement: public sector procurement programmes and contracts as revenue and market validation`,p:false,c:{
+          h:`Government channel development`,
+          b:`Government is often the best revenue channel for startups in regulated sectors and deep tech. Having worked inside a government ministry managing strategic partnerships with startups — including co-creating the Innovation Barometer with Creative HQ — I know how government procurement actually works: which programmes are relevant, what evaluation criteria are applied, and how to manage the relationship once you're in. I build this channel in parallel with direct commercial sales and use existing relationships to accelerate the qualification process.`
+        }},
+        {t:`Run a channel strategy combining direct sales and licensing or OEM in parallel — pure direct sales is rarely scalable for businesses with complex, high-value products`,p:false,c:null},
+      ],
+      outcome:`Repeatable sales process proven with 3+ wins; first BD hire is generating pipeline independently; OEM or government channel is active in parallel to direct sales.`
+    },
+    {
+      icon:`$`, name:`Funding & Finance`,
+      acts:[
+        {t:`Match capital type to risk type as you raise Series A and B: use equity for technical risk and shift toward debt instruments as operations de-risk`,p:true,c:null},
+        {t:`Pursue equipment financing and leasing for production capacity expansion where assets have secondary market value`,p:true,c:null},
+        {t:`Develop government contracts and public sector procurement as a meaningful revenue stream alongside private commercial sales`,p:false,c:null},
+        {t:`Build financial planning and analysis capability: capital-intensive businesses need rigorous COGS tracking, operational efficiency measurement, and unit economics modelling — the data discipline that separates companies that understand their path to margin from those still discovering it`,p:false,c:null},
+        {t:`Actively model and manage the cash conversion cycle — product and capital-intensive businesses carry significant working capital in inventory and work in progress, creating cash traps that can undermine an otherwise profitable operation`,p:false,c:null},
+      ],
+      outcome:`Series A closed; financial model credibly maps from current revenue to profitable unit economics at production scale; capital structure distinguishes between technology risk (equity) and execution risk (debt).`
+    },
+  ]
+},
+
+/* ══ 6 ═══════════════════════════════════════════════════════ */
+{
+  n:6, fund:`Series B / C`, name:`Scaling`,
+  meta:`150–1,000 people · Significant scale`,
+  intro:`My value at this stage is best deployed against a specific problem where senior operational experience makes the difference: a governance overhaul, a new function that needs standing up, a transformation programme that needs someone who has done it before.`,
+  dims:[
+    {
+      icon:`⊕`, name:`Operations & Automation`,
+      acts:[
+        {t:`Formalise enterprise risk management: identify, assign ownership of, and actively monitor key operational, regulatory, supply chain, and geopolitical risks`,p:true,c:{
+          h:`Enterprise risk management framework`,
+          b:`I design the formal risk management framework: a structured risk register, explicit ownership across functions, defined risk appetite, and a review cadence with the right escalation triggers. I've managed risk in complex multi-stakeholder programmes where the governance structures I designed were the mechanism by which risk was caught before it became a problem.`
+        }},
+        {t:`Design the multi-geography operating model: consistent standards across locations with local compliance handled by automated jurisdiction-specific workflows`,p:true,c:{
+          h:`Multi-geography operating model design`,
+          b:`I design the operating model for businesses spanning multiple geographies: consistent standards at the centre, with local compliance handled through automated jurisdiction-specific workflows rather than manual country-by-country processes. The result is a business that operates consistently at global scale without a large central operations team managing each geography individually.`
+        }},
+        {t:`Automate multi-entity financial consolidation across all legal entities and geographies`,p:false,c:{
+          h:`Multi-entity financial consolidation automation`,
+          b:`I build the automation layer that consolidates financial data across all legal entities and geographies — pulling from each entity's accounting system, applying the necessary eliminations, and surfacing a consolidated view for the finance team. The accounting structure belongs to a CFO; I build the system that makes it visible in real time.`
+        }},
+        {t:`Build vendor compliance automation to track and renew supplier certificates, insurance documents, and audit evidence — remove manual chasing from procurement operations`,p:false,c:null},
+        {t:`Establish operations sub-functions with dedicated leadership and operating rhythms: HR operations, finance operations, IT, and facilities each running as a managed system`,p:false,c:{
+          h:`Operations sub-function build-out`,
+          b:`I take operations sub-functions from concept to running: defining the function's scope and mandate, building its infrastructure, establishing its operating rhythm, and handing it over to dedicated leadership with a clear brief. I've done this multiple times — standing up new functions inside complex organisations and building the infrastructure that makes them self-sustaining.`
+        }},
+      ],
+      outcome:`A global, multi-entity business is governed with financial consolidation, vendor compliance, and local regulatory requirements handled automatically; operations sub-functions run independently with dedicated leadership and their own operating rhythms.`
+    },
+    {
+      icon:`⬡`, name:`Product`,
+      acts:[
+        {t:`Expand production or delivery capacity; use operational effectiveness analysis — OEE for capital equipment, throughput analysis for service capacity — to identify and remove the constraints limiting output before adding new capacity`,p:true,c:null},
+        {t:`Automate the highest-labour-cost and highest-defect process steps`,p:true,c:null},
+        {t:`Develop a second-source supply chain to reduce single-supplier concentration risk`,p:false,c:null},
+        {t:`Deploy the core technology across multiple applications or channels through a platform or licensing strategy`,p:false,c:null},
+        {t:`Track cost-per-unit trajectory against competitive alternatives to quantify pricing headroom`,p:false,c:null},
+      ],
+      outcome:`The core operational or production process is repeatable at volume, operational effectiveness is tracked and improving, and the learning curve is driving predictable cost reduction quarter-on-quarter.`
+    },
+    {
+      icon:`◎`, name:`Market & Customers`,
+      acts:[
+        {t:`Expand to adjacent market segments where the core technology applies with minimal modification`,p:true,c:null},
+        {t:`Develop OEM and licensing channels alongside direct enterprise sales — pure direct sales rarely scales for businesses with complex, high-value products`,p:true,c:null},
+        {t:`Achieve preferred or approved supplier status with key strategic accounts — approved supplier status raises the switching cost for the customer and creates a structural barrier to displacement that price competition alone cannot overcome`,p:false,c:null},
+        {t:`Engage in regulatory and standards work as market development: contribute to setting the standards that favour your technology's strengths — standards participation shapes the technical criteria against which all solutions are evaluated, which is structural market influence that no marketing budget achieves`,p:false,c:null},
+        {t:`Establish a customer advisory board with strategic accounts actively shaping the product roadmap`,p:false,c:null},
+      ],
+      outcome:`Multi-segment customer base across direct, OEM, and government channels; revenue is diversified; churn is low and customer switching costs are meaningful.`
+    },
+    {
+      icon:`↗`, name:`Go-to-Market`,
+      acts:[
+        {t:`Run a multi-channel go-to-market: direct enterprise, OEM licensing, government contracting, and international distributors each contributing meaningfully`,p:true,c:null},
+        {t:`Expand geographically through local partnerships — industrial and specialised markets are regional by nature; relationships and regulatory context that work in one geography rarely transfer automatically to another`,p:true,c:null},
+        {t:`Engage systems integrators and value-added resellers for markets where installation and commissioning are a significant part of the customer value`,p:false,c:null},
+        {t:`Pursue corporate venture and strategic investment from large industry players as a distribution channel — they invest in suppliers to secure supply and influence roadmap`,p:false,c:null},
+        {t:`Lead at industry level through conference keynotes, regulatory working groups, and standards contribution — companies that shape the industry conversation attract customers who want to be associated with the standard-setter, generate inbound introductions that no sales team could replicate, and build the network effects that compound into structural competitive advantage`,p:false,c:{
+          h:`Industry thought leadership & strategic communications`,
+          b:`As Project Manager for Citizen Engagement at Auckland Council, I led strategic communications programmes designed to shift the way the public and a wide network of partners thought about the organisation. This included hosting mini-conferences, building and coordinating communications across a partner network, and running engagement campaigns that achieved a population-level increase in trust and confidence — with a measurable 50% increase in public participation. The programme design, narrative development, and network orchestration that drives this kind of shift at scale translate directly from civic contexts to commercial ones. I help leadership teams design and execute the programme that moves market perception at industry level.`
+        }},
+      ],
+      outcome:`Multiple go-to-market channels operating independently at scale; revenue is not dependent on any single channel, geography, or customer type.`
+    },
+    {
+      icon:`$`, name:`Funding & Finance`,
+      acts:[
+        {t:`Shift the capital structure toward non-equity instruments as operations de-risk: equipment financing, infrastructure debt, and asset-backed lending`,p:true,c:null},
+        {t:`Secure infrastructure debt for new production or operational facilities backed by long-term customer contracts — separating infrastructure financing from equity preserves dilution for genuine risk capital`,p:true,c:null},
+        {t:`Exploit government incentives, tax credits, and subsidised loan programmes relevant to your sector — they can materially reduce the cost of capital`,p:false,c:null},
+        {t:`Hire a formal chief financial officer; track each major operational unit's profit and loss separately from corporate, each with its own capital budget — consolidated reporting obscures where margin is made and lost`,p:false,c:null},
+        {t:`Explore secondary transactions to provide structured liquidity for early employees and founders who have built significant value`,p:false,c:null},
+      ],
+      outcome:`Capital structure includes non-equity instruments appropriate to infrastructure and production capex needs; government incentives are fully exploited; formal financial controls and operational unit-level reporting are in place.`
+    },
+  ]
+},
+
+/* ══ 7 ═══════════════════════════════════════════════════════ */
+{
+  n:7, fund:`Late Stage / Exit`, name:`Market Leadership`,
+  meta:`1,000+ people · At scale`,
+  intro:`At this stage, my value is in specific projects where my background in regulatory compliance, government relations, and transformation management is the relevant experience.`,
+  dims:[
+    {
+      icon:`⊕`, name:`Operations & Automation`,
+      acts:[
+        {t:`Design and maintain the operating model as a deliberate strategic asset — the structures, decision rights, processes, and ways of working that determine whether the company can execute its strategy at scale. An operating model that no longer fits the strategy is the single most common hidden tax on late-stage performance`,p:true,c:{
+          h:`Operating model design & organisational strategy`,
+          b:`As Principal Advisor for Organisational Strategy and Change at the Ministry for the Environment, I served as the strategic partner to the Chief Operating Officer — a role covering the full scope of organisational design: strategy, structure, operating model, culture, functions, and workforce. I designed the Ministry's first enterprise portfolio management office from scratch, contributed to the growth strategy and operating model for a 40% organisational expansion, and led the formal organisational transformation programme. I bring the same discipline to late-stage companies: designing the operating model that allows the business to execute its strategy as effectively as possible at its current scale.`
+        }},
+        {t:`Commission formal organisational design reviews when the company's structure, decision rights, or ways of working no longer match its strategy or scale — the performance drag from structural misalignment is typically attributed to individuals rather than systems, which means it persists until deliberately corrected`,p:true,c:{
+          h:`Organisational design & transformation`,
+          b:`At the Ministry for the Environment, I designed and managed a formal organisational transformation programme — building the structures, operating model, and workforce design to support a 40% growth in organisational size. I designed functions from scratch, restructured existing ones, and built the change management practice that made reorganisations durable rather than disruptive. I apply that same rigour to organisations navigating the structural demands of scale.`
+        }},
+        {t:`Deploy agentic AI systems to coordinate workflows across finance, HR, and procurement — shift human operations time entirely to governance and exception handling, freeing the operations function for strategic design rather than administrative coordination`,p:false,c:{
+          h:`Agentic AI workflow deployment`,
+          b:`I design and deploy agentic AI systems that coordinate workflows across finance, HR, and procurement — systems that act on triggers, make routine decisions within defined parameters, and escalate edge cases to humans with full context assembled. This is the leading edge of what I do with Claude Code and Cowork, and where the compounding return on AI investment is greatest.`
+        }},
+        {t:`Build a proactive policy influence function: identify the regulatory changes that would most benefit the company's market position, engage policymakers before consultations close, and partner with industry bodies on thought leadership that advances the company's policy objectives — shaping the regulatory environment rather than simply adapting to it`,p:false,c:{
+          h:`Policy influence & regulatory strategy`,
+          b:`I've worked inside policymaking environments and understand how regulatory change actually happens — the consultation processes, the stakeholder dynamics, the informal levers that shift policy outcomes. I bring that insider perspective to the other side: helping companies design and execute policy engagement strategies that translate into real market changes. I know what lands with policymakers, how to build coalitions with aligned industry partners, and how to develop thought leadership that moves the policy conversation in the direction the business needs.`
+        }},
+        {t:`Run investor relations, public company reporting, and disclosure governance as a formal operational function with dedicated accountability — not an add-on to the finance team`,p:false,c:null},
+      ],
+      outcome:`Routine operational work is fully autonomous; the operations function spends its time on organisational design, governance, policy influence, and risk management — not on administration that could be systematised.`
+    },
+    {
+      icon:`⬡`, name:`Product`,
+      acts:[
+        {t:`Treat the core operational process — whether in production, service delivery, or software — as a defensible asset: document and protect the accumulated process knowledge that competitors cannot replicate without years of investment`,p:true,c:null},
+        {t:`Embed a continuous improvement culture: lean operations and systematic process measurement across all functions, driving sustained reduction in defect rates, unit costs, and delivery times`,p:true,c:null},
+        {t:`Pursue acquisitions to gain complementary process capabilities or production capacity — organic development of a new operational capability takes years; acquisition can compress the timeline while adding an established team and proven methods`,p:false,c:null},
+        {t:`Launch new product lines that leverage existing operational infrastructure, delivery capability, and supplier relationships — incremental revenue on a fixed cost base is the highest-return growth path at this stage`,p:false,c:null},
+        {t:`Develop proprietary operational data systems that create compounding cost and quality advantages structurally difficult for competitors to replicate`,p:false,c:null},
+      ],
+      outcome:`The production process itself is a defensible competitive moat — competitors cannot match cost, quality, or throughput at scale without years of accumulated process learning.`
+    },
+    {
+      icon:`◎`, name:`Market & Customers`,
+      acts:[
+        {t:`Own the performance benchmarks the industry measures against — publish data that demonstrates category leadership`,p:true,c:null},
+        {t:`Engage standards bodies and industry analysts: contribute to relevant international standards bodies and maintain relationships with sector analysts and trade publications`,p:true,c:null},
+        {t:`Build switching costs as a moat: deepen qualification cycles, integration depth, and proprietary operational data to make displacement structurally difficult`,p:false,c:null},
+        {t:`Run global key account management with senior executive relationships at anchor customers`,p:false,c:null},
+        {t:`Defend your competitive position by helping customers build deeper integration through service contracts, upgrades, and data services`,p:false,c:null},
+      ],
+      outcome:`The company is the preferred or default supplier in its core market segment; customers face qualification costs and switching risks that make displacement structurally unattractive.`
+    },
+    {
+      icon:`↗`, name:`Go-to-Market`,
+      acts:[
+        {t:`Contribute to or lead standards body technical committees that codify performance requirements aligned with your technology's strengths`,p:true,c:null},
+        {t:`Build an ecosystem strategy: qualify complementary suppliers, integrators, and service providers around the company's platform`,p:true,c:null},
+        {t:`Develop senior executive-to-executive strategic relationships with anchor customers and OEM partners`,p:false,c:null},
+        {t:`Distribute globally through owned subsidiaries in key markets and channel partners in secondary markets`,p:false,c:null},
+        {t:`Define the category: own the vocabulary used to describe performance in the sector`,p:false,c:null},
+      ],
+      outcome:`The company defines the performance standards the market measures against; OEM and channel partners depend on the technology and actively promote it.`
+    },
+    {
+      icon:`$`, name:`Funding & Finance`,
+      acts:[
+        {t:`Evaluate late-stage exit options — IPO, trade sale, or strategic merger — based on the business's position and market conditions at the time`,p:true,c:null},
+        {t:`Secure project finance for new production sites or major infrastructure investments backed by long-term customer contracts — this separates funding of physical assets from equity raised for growth and operating purposes`,p:true,c:null},
+        {t:`Leverage asset-backed lending against inventory, receivables, and qualified equipment`,p:false,c:null},
+        {t:`Build an investor relations function with analyst coverage in your industrial sector`,p:false,c:null},
+        {t:`Document and demonstrate a clear path to profitable unit economics at scale — required for public markets and any serious acquirer`,p:false,c:null},
+      ],
+      outcome:`The company has a clear and documented path to profitable unit economics at scale; operational economics are sufficiently mature to support external scrutiny from public markets or acquirers.`
+    },
+  ]
+}
+
+]; /* end STAGES */
+
+/* ── Render ──────────────────────────────────────────────────── */
+let active = 1;
+
+function setColor(n){
+  document.documentElement.style.setProperty('--sc', SC[n]);
+}
+
+function renderCard(c){
+  const linkHtml = c.link
+    ? `<a class="t-card-link" href="${esc(c.link.url)}" target="_blank" rel="noopener">${esc(c.link.text)} →</a>`
+    : '';
+  return `<div class="t-card">
+    <div class="t-card-title">${esc(c.h)}</div>
+    ${linkHtml}
+    <div class="t-card-body">${esc(c.b)}</div>
+  </div>`;
+}
+
+function renderPanel(n){
+  const s = STAGES.find(x=>x.n===n);
+
+  const rows = s.dims.map((d,i)=>{
+    // Build paired act-l / act-r cells
+    const cells = d.acts.map(a=>{
+      const extra = a.p ? '' : ' x';
+      const linked = a.c ? ' linked' : '';
+      const hasC = a.c ? ' has-contrib' : '';
+      return `<div class="act-l${extra}${linked}">${esc(a.t)}</div>` +
+             `<div class="act-r${extra}${hasC}">${a.c ? renderCard(a.c) : ''}</div>`;
+    }).join('');
+
+    return `
+      <div class="dim" id="d${n}_${i}" onclick="tog(${n},${i})">
+        <div class="d-lbl">
+          <span class="d-icon">${d.icon}</span>
+          <span class="d-name">${esc(d.name)}</span>
+          <div class="d-exp">
+            Expand
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+              <path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="d-body">
+          ${cells}
+          <div class="outcome-full"><strong>Outcome&nbsp;</strong>${esc(d.outcome)}</div>
+        </div>
+      </div>`;
+  }).join('');
+
+  return `<div class="panel">
+    <div class="s-hdr">
+      <div class="s-fund">${esc(s.fund)}</div>
+      <h2>${esc(s.name)}</h2>
+      <div class="s-meta">${esc(s.meta)}</div>
+      <p class="s-intro">${esc(s.intro)}</p>
+    </div>
+    <div class="col-leg">
+      <div class="cl"></div>
+      <div class="cl">At this stage, you're&nbsp;…</div>
+      <div class="cl green-head">Where I come in</div>
+    </div>
+    ${rows}
+  </div>`;
+}
+
+function tog(n,i){
+  document.getElementById(`d${n}_${i}`).classList.toggle('open');
+}
+
+function renderTabs(){
+  document.getElementById('stageTabs').innerHTML = STAGES.map(s=>`
+    <div class="tab${s.n===active?' on':''}" style="--sc:${SC[s.n]}" onclick="pick(${s.n})">
+      <div class="tab-fund">${esc(s.fund)}</div>
+      <div class="tab-name">${esc(s.name)}</div>
+    </div>`).join('');
+}
+
+function pick(n){
+  active = n;
+  setColor(n);
+  renderTabs();
+  document.getElementById('panelWrap').innerHTML = renderPanel(n);
+  const bar = document.querySelector('.stage-bar');
+  window.scrollTo({top: bar.offsetTop - 52, behavior:'smooth'});
+}
+
+/* ── Growth curve ──────────────────────────────────────────── */
+function catmullRom(p0,p1,p2,p3,t){
+  const t2=t*t,t3=t2*t;
+  return {
+    x:.5*((2*p1.x)+(-p0.x+p2.x)*t+(2*p0.x-5*p1.x+4*p2.x-p3.x)*t2+(-p0.x+3*p1.x-3*p2.x+p3.x)*t3),
+    y:.5*((2*p1.y)+(-p0.y+p2.y)*t+(2*p0.y-5*p1.y+4*p2.y-p3.y)*t2+(-p0.y+3*p1.y-3*p2.y+p3.y)*t3)
+  };
+}
+
+function drawGrowthCurve(){
+  const canvas=document.getElementById('growthCurve');
+  const hero=document.querySelector('.hero');
+  const W=window.innerWidth;
+  /* Contain the whole graph within the hero so nothing hides behind the stage bar */
+  const H=hero.offsetHeight;
+
+  const dpr=window.devicePixelRatio||1;
+  canvas.width=W*dpr;
+  canvas.height=H*dpr;
+  canvas.style.height=H+'px';
+  const bg=document.getElementById('curveBg');
+  bg.style.height=H+'px';
+
+  const ctx=canvas.getContext('2d');
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,W,H);
+
+  const GREEN='45,90,61';
+
+  /* ── Chart geometry ── */
+  const DROP=38;                      // ~10mm lower, clear of the hero text
+  const x0=Math.max(48,W*0.05);       // curve start x
+  const y0=Math.min(H-8,H-42+DROP);   // baseline
+  const x1=W-Math.max(56,W*0.05);     // right edge
+  const y1=44+DROP;                   // top of curve
+
+  /* ── The growth curve: clean monotonic exponential ── */
+  const cx0=x0, cx1=x1-26;            // stop short of plot edge so the arrow fits
+  const cy0=y0-6, cy1=y1+26;
+  const k=3.2;                        // exponential steepness
+  const N=160;
+  const pts=[];
+  for(let i=0;i<=N;i++){
+    const t=i/N;
+    const rise=(Math.exp(k*t)-1)/(Math.exp(k)-1);
+    pts.push({x:cx0+(cx1-cx0)*t, y:cy0-(cy0-cy1)*rise});
+  }
+
+  /* Soft fill under the curve */
+  const fillGrad=ctx.createLinearGradient(cx0,0,cx1,0);
+  fillGrad.addColorStop(0,`rgba(${GREEN},0.015)`);
+  fillGrad.addColorStop(1,`rgba(${GREEN},0.07)`);
+  ctx.beginPath();
+  ctx.moveTo(cx0,y0);
+  pts.forEach(p=>ctx.lineTo(p.x,p.y));
+  ctx.lineTo(pts[N].x,y0);
+  ctx.closePath();
+  ctx.fillStyle=fillGrad;
+  ctx.fill();
+
+  /* Curve stroke — thickens and darkens toward the tip */
+  for(let i=1;i<=N;i++){
+    const t=i/N;
+    const w=1.6+Math.pow(t,1.5)*3.4;
+    const a=0.10+Math.pow(t,1.3)*0.28;
+    ctx.beginPath();
+    ctx.moveTo(pts[i-1].x,pts[i-1].y);
+    ctx.lineTo(pts[i].x,pts[i].y);
+    ctx.strokeStyle=`rgba(${GREEN},${a})`;
+    ctx.lineWidth=w;
+    ctx.lineCap='round';
+    ctx.stroke();
+  }
+
+  /* ── Arrowhead at the tip, aligned to the curve's final direction ── */
+  const tip=pts[N], prev=pts[N-6];
+  const ang=Math.atan2(tip.y-prev.y,tip.x-prev.x);
+  const L=16;
+  ctx.save();
+  ctx.translate(tip.x,tip.y);
+  ctx.rotate(ang);
+  ctx.beginPath();
+  ctx.moveTo(L,0);
+  ctx.lineTo(-L*0.55,-L*0.5);
+  ctx.lineTo(-L*0.25,0);
+  ctx.lineTo(-L*0.55,L*0.5);
+  ctx.closePath();
+  ctx.fillStyle=`rgba(${GREEN},0.42)`;
+  ctx.fill();
+  ctx.restore();
+}
+
+(function(){
+  setColor(1);
+  renderTabs();
+  document.getElementById('panelWrap').innerHTML = renderPanel(1);
+  /* Draw after layout settles */
+  requestAnimationFrame(()=>requestAnimationFrame(drawGrowthCurve));
+  window.addEventListener('resize',drawGrowthCurve,{passive:true});
+
+  /* Stage bar: transparent over hero (shows curve), frosted when sticky over content */
+  const bar=document.querySelector('.stage-bar');
+  function updateBar(){
+    const heroH=document.querySelector('.hero').offsetHeight;
+    bar.classList.toggle('bar-stuck', window.scrollY >= heroH);
+  }
+  window.addEventListener('scroll',updateBar,{passive:true});
+  updateBar();
+})();
+</script>
+</body>
+</html>
