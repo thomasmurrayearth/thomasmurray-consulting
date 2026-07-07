@@ -49,7 +49,7 @@ html{scroll-padding-top:110px}
 .hero,.stage-bar,.panel-wrap{position:relative;z-index:1}
 
 /* ── Hero ── */
-.hero{max-width:860px;margin:0 auto;padding:80px 40px 140px}
+.hero{max-width:860px;margin:0 auto;padding:80px 40px 320px}
 .hero h1{
   font-size:54px;font-weight:500;line-height:1.07;
   letter-spacing:-.9px;color:var(--text);margin-bottom:24px;
@@ -77,9 +77,13 @@ html{scroll-padding-top:110px}
   scrollbar-width:none;
 }
 .stage-tabs::-webkit-scrollbar{display:none}
+/* Edge fades hint that more tabs exist off-screen */
+.stage-tabs.fade-r{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 48px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 48px),transparent)}
+.stage-tabs.fade-l{-webkit-mask-image:linear-gradient(90deg,transparent,#000 48px);mask-image:linear-gradient(90deg,transparent,#000 48px)}
+.stage-tabs.fade-l.fade-r{-webkit-mask-image:linear-gradient(90deg,transparent,#000 48px,#000 calc(100% - 48px),transparent);mask-image:linear-gradient(90deg,transparent,#000 48px,#000 calc(100% - 48px),transparent)}
 .tab{
-  flex:none;cursor:pointer;user-select:none;
-  padding:14px 20px 11px;min-width:132px;
+  flex:1 1 0;min-width:112px;cursor:pointer;user-select:none;
+  padding:14px 20px 11px;
   border-bottom:3px solid transparent;transition:background .12s;
 }
 .tab:hover{background:var(--surface2)}
@@ -229,7 +233,7 @@ html{scroll-padding-top:110px}
 /* ── Mobile ── */
 @media(max-width:900px){
   .nav{padding:0 20px;gap:20px}
-  .hero{padding:52px 20px 44px}
+  .hero{padding:52px 20px 140px}
   .hero h1{font-size:34px}
   .hero-sub{font-size:15px}
   .stage-tabs{padding:0 16px}
@@ -271,7 +275,7 @@ html{scroll-padding-top:110px}
 }
 @media(max-width:600px){
   .hero h1{font-size:28px;letter-spacing:-.4px}
-  .tab{min-width:112px;padding:12px 14px 9px}
+  .tab{min-width:104px;padding:12px 14px 9px}
   .tab-fund{font-size:10px}
   .tab-name{font-size:11px}
 }
@@ -291,8 +295,8 @@ html{scroll-padding-top:110px}
 <div class="wrap">
   <div class="curve-bg" id="curveBg"><canvas id="growthCurve"></canvas></div>
   <div class="hero">
-    <h1>Here's where<br><em>I fit in.</em></h1>
-    <p class="hero-sub">I've worked across the startup journey as an operator, adviser, and programme lead. Below is where that experience is sharpest — and what it looks like in practice.</p>
+    <h1>The hats I wear<br><em>in a startup.</em></h1>
+    <p class="hero-sub">My background is leading law reform and organisational transformation. Here's how that maps to a startup lifecycle.</p>
   </div>
 
   <div class="stage-bar">
@@ -989,6 +993,14 @@ function renderTabs(){
       <div class="tab-fund">${esc(s.fund)}</div>
       <div class="tab-name">${esc(s.name)}</div>
     </div>`).join('');
+  updateTabFades();
+}
+
+function updateTabFades(){
+  const el=document.getElementById('stageTabs');
+  const max=el.scrollWidth-el.clientWidth;
+  el.classList.toggle('fade-l', el.scrollLeft>4);
+  el.classList.toggle('fade-r', el.scrollLeft<max-4);
 }
 
 function pick(n){
@@ -1029,17 +1041,29 @@ function drawGrowthCurve(){
 
   const GREEN='45,90,61';
 
-  /* ── Chart geometry ── */
-  const DROP=38;                      // ~10mm lower, clear of the hero text
+  /* ── Chart geometry — anchored BELOW the hero text ── */
+  const sub=hero.querySelector('.hero-sub');
+  const bg2=document.getElementById('curveBg');
+  const bgTop=bg2.getBoundingClientRect().top;
+  const subRect=sub.getBoundingClientRect();
+  /* Curve tip: below the paragraph on wide screens; on narrow screens
+     the tip climbs clearly PAST (above) the subheading text level */
+  const narrow=W<900;
+  const tipY=narrow
+    ? Math.round(subRect.top-bgTop)-28
+    : Math.round(subRect.bottom-bgTop)+60;
   const x0=Math.max(48,W*0.05);       // curve start x
-  const y0=Math.min(H-8,H-42+DROP);   // baseline
+  const y0=H-28;                      // baseline near hero bottom
   const x1=W-Math.max(56,W*0.05);     // right edge
-  const y1=44+DROP;                   // top of curve
 
   /* ── The growth curve: clean monotonic exponential ── */
   const cx0=x0, cx1=x1-26;            // stop short of plot edge so the arrow fits
-  const cy0=y0-6, cy1=y1+26;
-  const k=3.2;                        // exponential steepness
+  const cy0=y0-6, cy1=tipY;
+  /* Exponential steepness — sized so the tail goes near-vertical:
+     target end-slope, converted to the k that produces it for this
+     canvas's width/height ratio (clamped so desktop stays graceful) */
+  const spanW=cx1-cx0, spanH=cy0-cy1;
+  const k=Math.min(10, Math.max(3.8, 4.2*spanW/Math.max(spanH,1)));
   const N=160;
   const pts=[];
   for(let i=0;i<=N;i++){
@@ -1099,6 +1123,12 @@ function drawGrowthCurve(){
   /* Draw after layout settles */
   requestAnimationFrame(()=>requestAnimationFrame(drawGrowthCurve));
   window.addEventListener('resize',drawGrowthCurve,{passive:true});
+
+  /* Tab-bar edge fades */
+  const tabsEl=document.getElementById('stageTabs');
+  tabsEl.addEventListener('scroll',updateTabFades,{passive:true});
+  window.addEventListener('resize',updateTabFades,{passive:true});
+  updateTabFades();
 
   /* Stage bar: transparent over hero (shows curve), frosted when sticky over content */
   const bar=document.querySelector('.stage-bar');
