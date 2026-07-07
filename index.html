@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Thomas Murray — Strategy &amp; Operations Leader</title>
-  <meta name="description" content="Thomas Murray. I close the gap between strategy and execution — taking ownership of the priorities that matter most." />
+  <meta name="description" content="Thomas Murray. I make it happen — driving the strategy and operations that bring your team’s vision into reality." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Platypi:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet" />
 
   <style>
     /* ── TOKENS ───────────────────────────────────────── */
@@ -20,10 +20,11 @@
       --muted:    #7a7870;
       --accent:   #3d8c68;
       --accent-2: #8a6f3a;
-      --serif:    'Cormorant Garamond', Georgia, serif;
-      --mono:     'DM Mono', monospace;
-      --sans:     'DM Sans', sans-serif;
+      --serif:    'Platypi', Georgia, serif;
+      --mono:     'Manrope', -apple-system, sans-serif;
+      --sans:     'Manrope', -apple-system, sans-serif;
       --radius:   3px;
+      --radius-full: 999px;
       --col:      720px;
       --pad:      clamp(24px, 5vw, 48px);
     }
@@ -35,7 +36,7 @@
       background: var(--bg);
       color: var(--text);
       font-family: var(--sans);
-      font-weight: 300;
+      font-weight: 400;
       font-size: 16px;
       line-height: 1.75;
       -webkit-font-smoothing: antialiased;
@@ -73,6 +74,7 @@
     }
     .nav-name {
       font-family: var(--mono);
+      font-weight: 700;
       font-size: 11px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -85,6 +87,7 @@
     }
     .nav-links a {
       font-family: var(--mono);
+      font-weight: 700;
       font-size: 10px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -104,6 +107,7 @@
     }
     .hero-label {
       font-family: var(--mono);
+      font-weight: 700;
       font-size: 10px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
@@ -111,26 +115,30 @@
       margin-bottom: 28px;
     }
     h1 {
-      font-family: var(--serif);
-      font-weight: 300;
-      font-size: clamp(48px, 8vw, 96px);
-      line-height: 1.0;
-      letter-spacing: -0.02em;
+      font-family: var(--sans);
+      font-weight: 500;
+      font-size: clamp(44px, 7.5vw, 88px);
+      line-height: 1.02;
+      letter-spacing: -0.03em;
       margin-bottom: 32px;
     }
     h1 em {
-      font-style: italic;
+      font-style: normal;
+      font-weight: 800;
       color: var(--accent);
     }
     .hero-sub {
-      font-size: 17px;
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 20px;
       color: var(--muted);
-      line-height: 1.7;
+      line-height: 1.55;
       max-width: 560px;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
     .hero-creds {
       font-family: var(--mono);
+      font-weight: 700;
       font-size: 10px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -141,28 +149,46 @@
     .hero-cta {
       display: flex;
       align-items: center;
-      gap: 28px;
+      gap: 14px;
       flex-wrap: wrap;
     }
     .btn-primary {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 12px 24px;
+      padding: 14px 26px;
       background: var(--accent);
       color: #fff;
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.12em;
+      font-family: var(--sans);
+      font-weight: 800;
+      font-size: 11px;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      border-radius: var(--radius);
+      border-radius: var(--radius-full);
       transition: background 0.2s, transform 0.15s;
     }
     .btn-primary:hover { background: #2e7055; transform: translateY(-1px); }
     .btn-ghost {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.12em;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 14px 26px;
+      font-family: var(--sans);
+      font-weight: 800;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text);
+      border: 1px solid var(--text);
+      border-radius: var(--radius-full);
+      transition: color 0.2s, background 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--bg); background: var(--text); }
+    .btn-text {
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--muted);
       display: inline-flex;
@@ -170,7 +196,7 @@
       gap: 6px;
       transition: color 0.2s;
     }
-    .btn-ghost:hover { color: var(--text); }
+    .btn-text:hover { color: var(--accent); }
 
     /* ── TICKER ───────────────────────────────────────── */
     .ticker-wrap {
@@ -187,6 +213,7 @@
     }
     .ticker-track span {
       font-family: var(--mono);
+      font-weight: 700;
       font-size: 10px;
       letter-spacing: 0.15em;
       text-transform: uppercase;
@@ -202,6 +229,7 @@
     /* ── SECTION LABELS ───────────────────────────────── */
     .label {
       font-family: var(--mono);
+      font-weight: 700;
       font-size: 10px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
@@ -221,14 +249,14 @@
 
     /* ── HEADINGS ─────────────────────────────────────── */
     h2 {
-      font-family: var(--serif);
-      font-weight: 300;
-      font-size: clamp(32px, 4.5vw, 52px);
-      line-height: 1.1;
-      letter-spacing: -0.01em;
+      font-family: var(--sans);
+      font-weight: 500;
+      font-size: clamp(30px, 4.2vw, 48px);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
       margin-bottom: 40px;
     }
-    h2 em { font-style: italic; color: var(--accent); }
+    h2 em { font-style: normal; font-weight: 800; color: var(--accent); }
 
     /* ── ABOUT ────────────────────────────────────────── */
     .about-body {
@@ -263,6 +291,7 @@
     }
     .stat-l {
       font-family: var(--mono);
+      font-weight: 700;
       font-size: 9px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -284,6 +313,7 @@
     }
     .quality-n {
       font-family: var(--mono);
+      font-weight: 700;
       font-size: 9px;
       color: var(--accent);
       letter-spacing: 0.12em;
@@ -304,7 +334,8 @@
       position: relative;
       height: 560px;
       overflow: hidden;
-      border-radius: var(--radius);
+      border-radius: 0;
+      border: 1px solid var(--line);
     }
     .photo-wrap img {
       width: 100%;
@@ -314,24 +345,7 @@
       display: block;
       filter: grayscale(6%) contrast(1.03);
     }
-    .photo-wrap::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 20%;
-      background: linear-gradient(to bottom, var(--bg), transparent);
-      z-index: 2;
-      pointer-events: none;
-    }
-    .photo-wrap::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 18%;
-      background: linear-gradient(to top, var(--bg), transparent);
-      z-index: 2;
-      pointer-events: none;
-    }
+    /* photo-wrap fade masks removed — hard edges on all sides */
 
     /* ── WORK ─────────────────────────────────────────── */
     .work-list {
@@ -354,6 +368,7 @@
     }
     .work-num {
       font-family: var(--mono);
+      font-weight: 700;
       font-size: 9px;
       letter-spacing: 0.15em;
       color: var(--accent);
@@ -361,16 +376,18 @@
     }
     .work-org {
       font-family: var(--mono);
+      font-weight: 700;
       font-size: 9px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--muted);
     }
     h3.work-title {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: clamp(20px, 2.5vw, 26px);
-      line-height: 1.25;
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: clamp(19px, 2.3vw, 24px);
+      line-height: 1.3;
+      letter-spacing: -0.01em;
       color: var(--text);
       margin-bottom: 14px;
     }
@@ -387,6 +404,7 @@
     }
     .tag {
       font-family: var(--mono);
+      font-weight: 700;
       font-size: 9px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -419,9 +437,10 @@
     }
     .approach-body { flex: 1; }
     h3.approach-title {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: 20px;
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: -0.01em;
       margin-bottom: 10px;
       color: var(--text);
     }
@@ -464,6 +483,7 @@
     }
     .quote-attr {
       font-family: var(--mono);
+      font-weight: 700;
       font-size: 10px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -493,8 +513,9 @@
       pointer-events: none;
     }
     .testi-text {
-      font-size: 16px;
-      line-height: 1.75;
+      font-family: var(--serif);
+      font-size: 18px;
+      line-height: 1.65;
       color: var(--muted);
       font-style: italic;
       position: relative;
@@ -513,6 +534,7 @@
     }
     .testi-role {
       font-family: var(--mono);
+      font-weight: 700;
       font-size: 9px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -526,6 +548,7 @@
     }
     .testi-org {
       font-family: var(--mono);
+      font-weight: 700;
       font-size: 9px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -534,14 +557,14 @@
 
     /* ── CONTACT ──────────────────────────────────────── */
     .contact-heading {
-      font-family: var(--serif);
-      font-weight: 300;
-      font-size: clamp(36px, 5vw, 60px);
-      line-height: 1.1;
-      letter-spacing: -0.01em;
+      font-family: var(--sans);
+      font-weight: 500;
+      font-size: clamp(34px, 4.8vw, 56px);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
       margin-bottom: 24px;
     }
-    .contact-heading em { font-style: italic; color: var(--accent); }
+    .contact-heading em { font-style: normal; font-weight: 800; color: var(--accent); }
     .contact-body {
       font-size: 15px;
       color: var(--muted);
@@ -561,6 +584,7 @@
     .contact-link:hover { color: var(--accent); }
     .cl-label {
       font-family: var(--mono);
+      font-weight: 700;
       font-size: 10px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -584,6 +608,7 @@
     }
     .footer-name {
       font-family: var(--mono);
+      font-weight: 700;
       font-size: 10px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -591,6 +616,7 @@
     }
     .footer-certs {
       font-family: var(--mono);
+      font-weight: 700;
       font-size: 9px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -636,10 +662,9 @@
   <section id="hero">
     <div class="col">
       <p class="hero-label">London &nbsp;·&nbsp; Currently open to full-time and contract engagements</p>
-      <h1>I close the gap between<br><em>strategy</em> and execution.</h1>
+      <h1>I make it <em>happen</em>.</h1>
       <p class="hero-sub">
-        I take ownership of the priorities that fall between functions,
-        need judgment to drive, and can't wait for later.
+        Focusing on ‘how’ your team works, I drive the strategy and operations that bring your vision into reality.
       </p>
       <p class="hero-creds">Twelve years &nbsp;·&nbsp; National-scale programmes &nbsp;·&nbsp; High-stakes delivery &nbsp;·&nbsp; AI-first operations</p>
       <div class="hero-cta">
@@ -651,7 +676,7 @@
           See my work
           <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <a href="value-chain-network.html" class="btn-ghost">
+        <a href="value-chain-network.html" class="btn-text">
           Resource: Value Chain for System Change
           <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
@@ -750,7 +775,7 @@
             <span class="work-org">Ministry for the Environment · NZ · 2023–2024</span>
           </div>
           <h3 class="work-title"><a href="https://environment.govt.nz/what-government-is-doing/areas-of-work/climate-change/adapting-to-climate-change/national-adaptation-framework/" target="_blank" rel="noopener" class="inline-link">New Zealand's National Climate Change Adaptation Programme</a></h3>
-          <p class="work-desc">Built New Zealand's national climate adaptation framework from nothing — in conditions where the brief itself was still being written. Defined the problem, established the governance, coordinated ~40 professionals across policy, science, legal, and planning, and ran five concurrent legislative workstreams against a live political deadline. The challenge wasn't just delivery: it was figuring out what needed to be delivered, by whom, and in what order, before any of that was clear.</p>
+          <p class="work-desc">Built New Zealand's national climate adaptation framework from nothing. The brief itself was still being written. Defined the problem, established the governance, coordinated ~40 professionals across policy, science, legal, and planning, and ran five concurrent legislative workstreams against a live political deadline. The challenge wasn't just delivery: it was figuring out what needed to be delivered, by whom, and in what order, before any of that was clear.</p>
           <div class="work-tags"><span class="tag">Programme Management</span><span class="tag">Governance Design</span><span class="tag">Multi-Workstream</span><span class="tag">NZD $4m Budget</span></div>
         </div>
 
@@ -760,7 +785,7 @@
             <span class="work-org">Ministry for the Environment · NZ · 2021–2023</span>
           </div>
           <h3 class="work-title">Enterprise Portfolio Management Office — Zero to One</h3>
-          <p class="work-desc">The executive leadership team had no picture of how the organisation's resources were balanced across strategic priorities — and nobody had identified this as a problem. Without being asked: designed organisation-wide project reporting, secured executive agreement to make it compulsory, built the portfolio dashboard, and presented it alongside resource allocation advice. The team requested it monthly. Then stood it up as a permanent function. This is the pattern across every role I've held: identify something that needs to exist, build it, demonstrate its value, be trusted with more.</p>
+          <p class="work-desc">The executive leadership team had no picture of how the organisation's resources were balanced across strategic priorities. Nobody had identified this as a problem. Without being asked: designed organisation-wide project reporting, secured executive agreement to make it compulsory, built the portfolio dashboard, and presented it alongside resource allocation advice. The team requested it monthly. Then stood it up as a permanent function. This is the pattern across every role I've held: identify something that needs to exist, build it, demonstrate its value, be trusted with more.</p>
           <div class="work-tags"><span class="tag">Internal Consultancy</span><span class="tag">EPMO</span><span class="tag">Operating Model</span><span class="tag">Zero to One</span></div>
         </div>
 
@@ -780,7 +805,7 @@
             <span class="work-org">Ministry for the Environment · NZ · 2020–2021</span>
           </div>
           <h3 class="work-title">National Innovation Partnerships — Climate &amp; Circular Economy</h3>
-          <p class="work-desc">Built two national cross-sector programmes from scratch — from identifying the opportunity, through designing the partnership structure, to managing delivery. The Creative HQ partnership produced <a href="https://creativehq.co.nz/stories/climate-response-accelerator-2024/" target="_blank" rel="noopener" class="inline-link">New Zealand's first government-backed climate tech accelerator</a>; first cohort companies raised over $5m combined. The Sustainable Business Network partnership delivered Go Circular and the <a href="https://sustainable.org.nz/circular-economy-directory/" target="_blank" rel="noopener" class="inline-link">national Circular Economy Marketplace</a>. Neither programme had a template to follow.</p>
+          <p class="work-desc">Built two national cross-sector programmes from scratch. Identified the opportunity, designed the partnership structure, and managed delivery. The Creative HQ partnership produced <a href="https://creativehq.co.nz/stories/climate-response-accelerator-2024/" target="_blank" rel="noopener" class="inline-link">New Zealand's first government-backed climate tech accelerator</a>; first cohort companies raised over $5m combined. The Sustainable Business Network partnership delivered Go Circular and the <a href="https://sustainable.org.nz/circular-economy-directory/" target="_blank" rel="noopener" class="inline-link">national Circular Economy Marketplace</a>. Neither programme had a template to follow.</p>
           <div class="work-tags"><span class="tag">Partnerships</span><span class="tag">Innovation</span><span class="tag">Climate Tech</span><span class="tag">Programme Build</span></div>
         </div>
 
@@ -790,7 +815,7 @@
             <span class="work-org">Oranga Tamariki · NZ · 2019–2020</span>
           </div>
           <h3 class="work-title"><a href="https://waikatotainui.com/hapori/mokopuna-ora/" target="_blank" rel="noopener" class="inline-link">Mokopuna Ora</a> — Social Services Change Programme</h3>
-          <p class="work-desc">Social work services across two regional offices were producing serious negative outcomes. The programme needed a workforce that understood why change was necessary and knew how to operate differently — not just a new process to follow. Built the change narrative, established the change management framework, and equipped managers to lead their teams through genuine uncertainty. Services were co-designed with frontline staff and whanau. The result: a 90% reduction in negative outcomes.</p>
+          <p class="work-desc">Social work services across two regional offices were producing serious negative outcomes. The programme needed a workforce that understood why change was necessary and knew how to operate differently. A new process alone wouldn't do it. Built the change narrative, established the change management framework, and equipped managers to lead their teams through genuine uncertainty. Services were co-designed with frontline staff and whanau. The result: a 90% reduction in negative outcomes.</p>
           <div class="work-tags"><span class="tag">Change Management</span><span class="tag">Service Design</span><span class="tag">Stakeholder Engagement</span></div>
         </div>
       </div>
@@ -862,7 +887,7 @@
     <div class="col">
       <p class="label reveal">Contact</p>
       <h2 class="contact-heading reveal">Let's talk about<br>what's <em>not</em><br>working.</h2>
-      <p class="contact-body reveal">Currently open to full-time and contract engagements. I'm looking for a role in a mission-driven organisation — somewhere my effectiveness translates more directly than in government. If you're a leader who needs someone to take ownership of the complex stuff and make it happen, I'd like to hear from you.</p>
+      <p class="contact-body reveal">Currently open to full-time and contract engagements. I'm looking for a role in a mission-driven organisation where my effectiveness translates more directly than in government. If you're a leader who needs someone to take ownership of the complex stuff and make it happen, I'd like to hear from you.</p>
       <div class="contact-links reveal">
         <a href="https://www.linkedin.com/in/1thomasmurray" target="_blank" rel="noopener" class="contact-link">
           <span class="cl-label">LinkedIn</span>
