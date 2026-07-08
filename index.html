@@ -206,6 +206,12 @@
       transition: color 0.2s;
     }
     .btn-text:hover { color: var(--accent); }
+    .hero-resource-links {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
 
     /* ── TICKER ───────────────────────────────────────── */
     .ticker-wrap {
@@ -689,14 +695,16 @@
           Where I sit in startups
           <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <a href="https://grant-analyzer-production.up.railway.app/" class="btn-text" target="_blank" rel="noopener">
-          App: Find grant funding for your startup
-          <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="value-chain-network.html" class="btn-text">
-          Resource: Value Chain for System Change
-          <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
+        <div class="hero-resource-links">
+          <a href="https://grant-analyzer-production.up.railway.app/" class="btn-text" target="_blank" rel="noopener">
+            App: Find grant funding for your startup
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="value-chain-network.html" class="btn-text">
+            Resource: Value Chain for System Change
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
       </div>
     </div>
   </section>
